@@ -2,7 +2,7 @@
 /// <summary>
 /// Debug用なので消してもいい
 /// </summary>
-public class DebugHP : MonoBehaviour
+public class DebugHP : MonoBehaviour,IDamageble
 {
     [SerializeField] float _life = 10;
     float _moveSpeed = 5;
@@ -26,5 +26,10 @@ public class DebugHP : MonoBehaviour
     public void AddDamage(float damage)
     {
         _life -= damage;
+    }
+
+    public void AddDamage(int damagePoint)
+    {
+        _life -= damagePoint;
     }
 }
