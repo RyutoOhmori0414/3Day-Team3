@@ -13,10 +13,19 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private Coroutine _currentGame = null;
 
-    private void PlayInit()
+    private void PublichGameReady()
     {
-        CurrentReadySeconds = 0F;
-        CurrentGameElapsedSeconds = 0F;
+        var currentScene = SceneManager.GetActiveScene();
+
+        foreach (var root in currentScene.GetRootGameObjects())
+        {
+            var recievers = root.GetComponentsInChildren<IGameReadyReciever>();
+
+            foreach (var reciever in recievers)
+            {
+                reciever.GameReady();
+            }
+        }
     }
 
     private void PublichGameStart()
@@ -32,6 +41,27 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
                 reciever.GameStart();
             }
         }
+    }
+
+    private void PublichGameEnd()
+    {
+        var currentScene = SceneManager.GetActiveScene();
+
+        foreach (var root in currentScene.GetRootGameObjects())
+        {
+            var recievers = root.GetComponentsInChildren<IGameEndReciever>();
+
+            foreach (var reciever in recievers)
+            {
+                reciever.GameEnd();
+            }
+        }
+    }
+
+    private void PlayInit()
+    {
+        CurrentReadySeconds = 0F;
+        CurrentGameElapsedSeconds = 0F;
     }
 
     private IEnumerator Ready()
@@ -80,26 +110,12 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         _currentGame = StartCoroutine(GamePlay());
     }
 
-    private void PublichGameEnd()
-    {
-        var currentScene = SceneManager.GetActiveScene();
-
-        foreach (var root in currentScene.GetRootGameObjects())
-        {
-            var recievers = root.GetComponentsInChildren<IGameEndReciever>();
-
-            foreach (var reciever in recievers)
-            {
-                reciever.GameEnd();
-            }
-        }
-    }
-
     public void StopGame()
     {
         if (_currentGame is null) return;
 
         StopCoroutine(_currentGame);
         _currentGame = null;
+        PublichGameEnd();
     }
 }
