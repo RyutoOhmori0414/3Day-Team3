@@ -17,7 +17,7 @@ MonoBehaviour:
     To: PlayerCamera_Move
     Blend:
       Style: 1
-      Time: 4
+      Time: 2
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -39,7 +39,7 @@ MonoBehaviour:
     To: PlayerCamera_Idle
     Blend:
       Style: 1
-      Time: 1
+      Time: 2
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -50,7 +50,7 @@ MonoBehaviour:
     To: PlayerCamera_Move
     Blend:
       Style: 1
-      Time: 1
+      Time: 2
       CustomCurve:
         serializedVersion: 2
         m_Curve: []
@@ -72,7 +72,7 @@ MonoBehaviour:
     To: PlayerCamera_Charge
     Blend:
       Style: 1
-      Time: 0.5
+      Time: 1
       CustomCurve:
         serializedVersion: 2
         m_Curve: []

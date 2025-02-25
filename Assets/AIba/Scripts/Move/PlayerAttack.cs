@@ -18,8 +18,17 @@ public class PlayerAttack
     [Header("弾を出す位置")]
     [SerializeField] private Transform _muzzlePos;
 
-    [Header("弾")]
-    [SerializeField] private GameObject _bullet;
+    [Header("反射の弾")]
+    [SerializeField] private GameObject _reflectionbullet;
+    [Header("貫通弾")]
+    [SerializeField] private GameObject _penetrationBullet;
+
+    [Header("反射のUI")]
+    [SerializeField] private GameObject _reflectionImage;
+    [Header("貫通のUI")]
+    [SerializeField] private GameObject _penetrationImage;
+
+    private BulletType _bulletType = BulletType.Penetration;
 
     private float _countChargeTime = 0;
 
@@ -33,6 +42,8 @@ public class PlayerAttack
 
     private bool _isReleaseAttackButtun = false;
 
+
+
     public bool IsCharge => _isCharge;
 
     private PlayerControl _playerControl;
@@ -41,6 +52,27 @@ public class PlayerAttack
     {
         _playerControl = playerControl;
         _chargeEffect.ForEach(i => i.Stop());
+    }
+
+    public void ChangeBulletType()
+    {
+        if (_isCharge) return;
+
+        if (_playerControl.InputM.IsRightMouseClickDown)
+        {
+            if (_bulletType == BulletType.Reflection)
+            {
+                _bulletType = BulletType.Penetration;
+                _penetrationImage.SetActive(true);
+                _reflectionImage.SetActive(false);
+            }
+            else
+            {
+                _bulletType = BulletType.Reflection;
+                _penetrationImage.SetActive(false);
+                _reflectionImage.SetActive(true);
+            }
+        }
     }
 
     public void Charge()
@@ -102,8 +134,16 @@ public class PlayerAttack
 
         _playerControl.CameraSetting.ResetChangeCameraCount();
 
+        GameObject go;
+        if (_bulletType == BulletType.Reflection)
+        {
+            go = GameObject.Instantiate(_reflectionbullet);
+        }
+        else
+        {
+            go = GameObject.Instantiate(_penetrationBullet);
+        }
 
-        var go = GameObject.Instantiate(_bullet);
         go.transform.position = _muzzlePos.position;
         Vector3 dir = _muzzlePos.position - _playerControl.transform.position;
         go?.GetComponent<PlayerBullet>()?.Init(dir);
