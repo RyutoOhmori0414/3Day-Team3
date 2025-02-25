@@ -15,10 +15,12 @@ public class BackGroundAnimation : MonoBehaviour
 
         var tex_EnCo = tex_EnemyCount.GetComponent<RectTransform>();
         tex_EnCo.anchoredPosition = new Vector2(0, -600);
-        tex_EnCo.transform.DOMoveY(650f, 5f);
-
+        tex_EnCo.transform.DOMoveY(650f, 5f)
+            .SetEase(Ease.OutBack);
+        
         var tex_SuTi = tex_SurviveTime.GetComponent<RectTransform>();
         tex_SuTi.anchoredPosition = new Vector2(0, -715);
-        tex_SuTi.transform.DOMoveY(550f, 5f);
+        tex_SuTi.transform.DOMoveY(550f, 5f)
+            .SetEase(Ease.OutBack);
     }
 }

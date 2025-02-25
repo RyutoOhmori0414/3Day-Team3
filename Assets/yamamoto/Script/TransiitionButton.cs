@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿using DG.Tweening;
+using UnityEngine;
 using UnityEngine.SceneManagement;
-using DG.Tweening;
 
 public class TransiitionButton : MonoBehaviour
 {
