@@ -2,15 +2,17 @@
 
 public class EnemyBullet : MonoBehaviour
 {
-    [SerializeField] int _damage;
-    [SerializeField] float _speed = 2;
-    GameObject _player;
+    [SerializeField, Header("与ダメ")]
+    int _damage;
+    [SerializeField, Header("弾速")]
+    float _speed = 2;
     Vector3 _dir;
-    void Start()
+    [SerializeField, Header("生成してから弾を破壊するまでの時間")]
+    float _destroyTime;
+    private void Start()
     {
-        _dir = _player.transform.position - transform.position;
+        Destroy(gameObject, _destroyTime);
     }
-
     void FixedUpdate()
     {
         transform.position += _dir.normalized * _speed * Time.deltaTime;
@@ -26,6 +28,6 @@ public class EnemyBullet : MonoBehaviour
     }
     public void AddTarget(GameObject player)
     {
-        _player = player;
+        _dir = player.transform.position - transform.position;
     }
 }
