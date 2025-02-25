@@ -1,10 +1,15 @@
 ﻿using UnityEngine;
 
-public abstract class Enemy_B : MonoBehaviour
+public abstract class Enemy_B : MonoBehaviour, IDamageble
 {
-    [SerializeField, Header("スピード")] protected float _moveSpeed = 1;
-    [SerializeField, Header("止まる距離")] float _stopDistance = 0.2f;
+    [SerializeField, Header("スピード")] 
+    protected float _moveSpeed = 1;
+    [SerializeField, Header("止まる距離")] 
+    float _stopDistance = 0.2f;
+    [SerializeField, Header("ぶつかったときのダメージ")]
+    int _hitDamage = 1;
     protected GameObject _player;
+    int _life;
     private void Start()
     {
         Start_S();
@@ -37,19 +42,17 @@ public abstract class Enemy_B : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")//Tagでやりたくはない
+        if (other.TryGetComponent(out IDamageble component))
         {
-            Attack(other.gameObject, 2);
+            component.AddDamage(_hitDamage);
         }
     }
 
     protected virtual void Start_S() { }
     protected virtual void Update_S() { }
-    protected virtual void Attack(GameObject target, float damage)
+
+    public void AddDamage(int damagePoint)
     {
-        if (target.TryGetComponent(out DebugHP hP))
-        {
-            hP.AddDamage(damage);
-        }
+        _life -= damagePoint;
     }
 }
