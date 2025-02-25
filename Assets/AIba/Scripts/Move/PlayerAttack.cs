@@ -145,7 +145,8 @@ public class PlayerAttack
         }
 
         go.transform.position = _muzzlePos.position;
-        Vector3 dir = _muzzlePos.position - _playerControl.transform.position;
+        Vector3 dir = _muzzlePos.position - _playerControl.PlayerImage.transform.position;
+        dir.y = 0;
         go?.GetComponent<PlayerBullet>()?.Init(dir);
     }
 

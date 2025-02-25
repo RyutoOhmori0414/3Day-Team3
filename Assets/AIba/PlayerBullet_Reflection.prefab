@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7276012556352284868}
   - component: {fileID: 520742135829031410}
   - component: {fileID: 93965912916292442}
-  - component: {fileID: 3157598777796825770}
   - component: {fileID: -1622358531863178237}
   - component: {fileID: -1335820733518053172}
+  - component: {fileID: 7061657320274737555}
   m_Layer: 0
   m_Name: PlayerBullet_Reflection
   m_TagString: Untagged
@@ -90,27 +90,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3157598777796825770
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6704738874375085048}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &-1622358531863178237
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -151,10 +130,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletType: 0
-  _speed: 7
+  _speed: 12
   _attackPower: 7
   _lifeTime: 10
-  _hitNum: 4
+  _hitNum: 10
+--- !u!136 &7061657320274737555
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6704738874375085048}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &773773377716969974
 PrefabInstance:
   m_ObjectHideFlags: 0

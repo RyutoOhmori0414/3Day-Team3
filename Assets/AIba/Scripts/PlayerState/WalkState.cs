@@ -8,6 +8,9 @@ public class WalkState : PlayerStateBase
     public override void Enter()
     {
         _stateMachine.PlayerControl.CameraSetting.ResetChangeCameraCount();
+
+        //アニメーション設定
+        _stateMachine.PlayerControl.Anim.Move(true);
     }
 
     public override void Exit()
