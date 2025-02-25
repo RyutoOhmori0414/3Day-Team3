@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -24,6 +25,13 @@ public class PlayerHp
     {
         _hp -= damage;
         _hpText.text = _hp.ToString();
+
+        if (_hp < 0)
+        {
+            SingletonSceneManager.I.LoadScene("Result");
+        }
+
+
     }
 
 }

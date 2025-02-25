@@ -15,7 +15,6 @@ public class PlayerControl : MonoBehaviour,IDamageble
     [Header("カメラ設定")]
     [SerializeField] private PlayerCamera _cameraSetting;
 
-
     [Header("PlayerのRigidbody")]
     [SerializeField] private Rigidbody _rb;
     [SerializeField] private InputManager _input;
@@ -31,6 +30,8 @@ public class PlayerControl : MonoBehaviour,IDamageble
 
     void Start()
     {
+        GameManager.I.PlayReady();
+
         _stateMachine.Init(this);
         _move.Init(this);
         _cameraSetting.Init(this);
@@ -43,6 +44,7 @@ public class PlayerControl : MonoBehaviour,IDamageble
     {
         _stateMachine.Update();
         _attack.Charge();
+        _attack.ChangeBulletType();
     }
 
     private void FixedUpdate()
