@@ -26,7 +26,9 @@ public abstract class Enemy_B : MonoBehaviour
                 transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
             }
         }
+        Debug.Assert(_player != null);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
