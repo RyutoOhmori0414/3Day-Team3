@@ -12,4 +12,9 @@ public class TransiitionButton : MonoBehaviour
     {
         SceneManager.LoadScene("GameScene");
     }
+
+    public void Ranking()
+    {
+        SceneManager.LoadScene("Ranking");
+    }
 }
