@@ -25,6 +25,11 @@ public abstract class Enemy_B : MonoBehaviour
             {
                 transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
             }
+            else if (dir.magnitude < _stopDistance - 0.1f)
+            {
+                transform.position += -dir.normalized * _moveSpeed * Time.deltaTime;
+            }
+
         }
         Debug.Assert(_player != null);
     }
