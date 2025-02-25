@@ -2,9 +2,9 @@
 
 public abstract class Enemy_B : MonoBehaviour, IDamageble
 {
-    [SerializeField, Header("スピード")] 
+    [SerializeField, Header("スピード")]
     protected float _moveSpeed = 1;
-    [SerializeField, Header("止まる距離")] 
+    [SerializeField, Header("止まる距離")]
     float _stopDistance = 0.2f;
     [SerializeField, Header("ぶつかったときのダメージ")]
     int _hitDamage = 1;
@@ -26,6 +26,7 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
         if (_player != null)
         {
             var dir = _player.transform.position - transform.position;
+
             if (dir.magnitude >= _stopDistance)
             {
                 transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
@@ -35,6 +36,20 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
                 transform.position += -dir.normalized * _moveSpeed * Time.deltaTime;
             }
 
+            dir.y = 0;
+            var cross = Vector3.Cross(transform.forward, dir);
+            if (cross.y < 0 && transform.localScale.x > 0)
+            {
+                transform.localScale = new Vector3(-1, 1, 1);
+            }
+            if (cross.y > 0 && transform.localScale.x < 0)
+            {
+                transform.localScale = new Vector3(1, 1, 1);
+            }
+            else
+            {
+                return;
+            }
         }
         Debug.Assert(_player != null);
     }
