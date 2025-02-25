@@ -56,9 +56,12 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IDamageble component))
+        if (other.gameObject.tag == "Player")
         {
-            component.AddDamage(_hitDamage);
+            if (other.TryGetComponent(out IDamageble component))
+            {
+                component.AddDamage(_hitDamage);
+            }
         }
     }
 
