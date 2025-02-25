@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 
 public class TransiitionButton : MonoBehaviour
 {
@@ -11,10 +12,5 @@ public class TransiitionButton : MonoBehaviour
     public void GameStart()
     {
         SceneManager.LoadScene("GameScene");
-    }
-
-    public void Ranking()
-    {
-        SceneManager.LoadScene("Ranking");
     }
 }
