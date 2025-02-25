@@ -2,5 +2,6 @@
 
 public class ShortEnemy : Enemy_B
 {
-
+    
 }
+
