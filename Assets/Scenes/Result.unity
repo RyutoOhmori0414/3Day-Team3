@@ -795,7 +795,7 @@ MonoBehaviour:
   tex_SurviveTime: {fileID: 1149801191}
   tex_Count: {fileID: 225352786}
   tex_Time: {fileID: 965595469}
-  time: 3
+  time: 0.8
 --- !u!4 &259578302
 Transform:
   m_ObjectHideFlags: 0

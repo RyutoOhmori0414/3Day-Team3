@@ -28,21 +28,21 @@ public class BackGroundAnimation : MonoBehaviour
         var tex_EnCo = tex_EnemyCount.GetComponent<RectTransform>();
         tex_EnCo.anchoredPosition = new Vector2(0, -600);
         tex_EnCo.transform.DOMoveY(650f, time)
-            .SetEase(Ease.OutBounce);
+            .SetEase(Ease.InOutQuad);
         
         var tex_SuTi = tex_SurviveTime.GetComponent<RectTransform>();
         tex_SuTi.anchoredPosition = new Vector2(0, -715);
-        tex_SuTi.transform.DOMoveY(550f, time)
-            .SetEase(Ease.OutBounce);
+        tex_SuTi.transform.DOMoveY(500f, time)
+            .SetEase(Ease.InOutQuad);
 
         var tex_Co = tex_Count.GetComponent<RectTransform>();
         tex_Co.anchoredPosition = new Vector2(500, -600);
         tex_Co.transform.DOMoveY(650f, time)
-            .SetEase(Ease.OutBounce);
+            .SetEase(Ease.InOutQuad);
 
         var tex_Ti = tex_Time.GetComponent<RectTransform>();
         tex_Ti.anchoredPosition = new Vector2(500, -715);
-        tex_Ti.transform.DOMoveY(550f, time)
-            .SetEase(Ease.OutBounce);
+        tex_Ti.transform.DOMoveY(500f, time)
+            .SetEase(Ease.InOutQuad);
     }
 }
