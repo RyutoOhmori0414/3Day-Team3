@@ -9,7 +9,7 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
     [SerializeField, Header("ぶつかったときのダメージ")]
     int _hitDamage = 1;
     protected GameObject _player;
-    int _life;
+    [SerializeField] int _life = 5;
     private void Start()
     {
         FindAnyObjectByType<GameManager>().DefeatEnemy();
@@ -20,10 +20,6 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
     private void Update()
     {
         Update_S();
-    }
-
-    private void FixedUpdate()
-    {
         Debug.Assert(_player != null);
         if (_player == null) return;
         var dir = _player.transform.position - transform.position;
@@ -71,5 +67,9 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
     public void AddDamage(int damagePoint)
     {
         _life -= damagePoint;
+        if (_life <= 0)
+        {
+            Destroy(gameObject);
+        }
     }
 }
