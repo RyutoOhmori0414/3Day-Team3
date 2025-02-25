@@ -7,7 +7,7 @@ public class WalkState : PlayerStateBase
 {
     public override void Enter()
     {
-
+        _stateMachine.PlayerControl.CameraSetting.ResetChangeCameraCount();
     }
 
     public override void Exit()
@@ -31,9 +31,24 @@ public class WalkState : PlayerStateBase
         var h = _stateMachine.PlayerControl.InputM.HorizontalInput;
         var v = _stateMachine.PlayerControl.InputM.VerticalInput;
 
+        //カメラの設定
+        //_stateMachine.PlayerControl.CameraSetting.MoveCameraFOV(true);
+
+
+
+        if (h != 0 || v != 0)
+        {
+            _stateMachine.PlayerControl.CameraSetting.ChangeCamera(CameraType.Move, true);
+        }
+        else
+        {
+            _stateMachine.PlayerControl.CameraSetting.ChangeCamera(CameraType.Move, false);
+        }
+        _stateMachine.PlayerControl.CameraSetting.CameraGroupSetting();
+
         if (h == 0 && v == 0)
         {
-            _stateMachine.TransitionTo(_stateMachine.StateWalk);
+            _stateMachine.TransitionTo(_stateMachine.StateIdle);
             return;
         }
     }
