@@ -50,6 +50,11 @@ public class PlayerBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.tag == "Player_Move")
+        {
+            return;
+        }
+
         _hitCount++;
 
         if (other.gameObject.tag == "Enemy")
