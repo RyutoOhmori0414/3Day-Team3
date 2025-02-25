@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-public class Enemy_B : MonoBehaviour
+public abstract class Enemy_B : MonoBehaviour
 {
-    [SerializeField,Header("スピード")] protected float _moveSpeed = 1;
+    [SerializeField, Header("スピード")] protected float _moveSpeed = 1;
     [SerializeField, Header("止まる距離")] float _stopDistance = 0.2f;
     protected GameObject _player;
     private void Start()
@@ -18,10 +18,13 @@ public class Enemy_B : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var dir = _player.transform.position - transform.position;
-        if (dir.magnitude >= _stopDistance)
+        if (_player != null)
         {
-            transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
+            var dir = _player.transform.position - transform.position;
+            if (dir.magnitude >= _stopDistance)
+            {
+                transform.position += dir.normalized * _moveSpeed * Time.deltaTime;
+            }
         }
     }
 
@@ -29,10 +32,17 @@ public class Enemy_B : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")//Tagでやりたくはない
         {
-            //ダメージ処理
+            Attack(other.gameObject, 2);
         }
     }
 
     protected virtual void Start_S() { }
     protected virtual void Update_S() { }
+    protected virtual void Attack(GameObject target, float damage)
+    {
+        if (target.TryGetComponent(out DebugHP hP))
+        {
+            hP.AddDamage(damage);
+        }
+    }
 }
