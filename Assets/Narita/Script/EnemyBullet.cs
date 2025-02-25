@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 public class EnemyBullet : MonoBehaviour
 {
@@ -19,9 +18,9 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out DebugHP hP))
+        if (other.TryGetComponent(out IDamageble component))
         {
-            hP.AddDamage(_damage);
+            component.AddDamage(_damage);
         }
         Destroy(gameObject);
     }
