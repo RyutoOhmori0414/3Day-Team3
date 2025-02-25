@@ -20,9 +20,12 @@ public class EnemyBullet : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.TryGetComponent(out IDamageble component))
+        if (other.gameObject.tag == "Player")
         {
-            component.AddDamage(_damage);
+            if (other.TryGetComponent(out IDamageble component))
+            {
+                component.AddDamage(_damage);
+            }
         }
         Destroy(gameObject);
     }
