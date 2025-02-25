@@ -61,7 +61,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private Coroutine _currentGame = null;
 
-    private void PublichGameReady()
+    private void PublishGameReady()
     {
         var currentScene = SceneManager.GetActiveScene();
 
@@ -76,7 +76,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    private void PublichGameStart()
+    private void PublishGameStart()
     {
         var currentScene = SceneManager.GetActiveScene();
 
@@ -91,7 +91,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    private void PublichGameEnd()
+    private void PublishGameEnd()
     {
         var currentScene = SceneManager.GetActiveScene();
 
@@ -126,7 +126,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private IEnumerator Play()
     {
-        PublichGameStart();
+        PublishGameStart();
 
         while (true)
         {
@@ -156,6 +156,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
         if (_currentGame is not null) return;
 
         ResetParams();
+        PublishGameReady();
         _currentGame = StartCoroutine(GamePlay());
     }
 
@@ -165,6 +166,6 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
         StopCoroutine(_currentGame);
         _currentGame = null;
-        PublichGameEnd();
+        PublishGameEnd();
     }
 }
