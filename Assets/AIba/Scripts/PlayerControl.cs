@@ -75,5 +75,6 @@ public class PlayerControl : MonoBehaviour
     private void LateUpdate()
     {
         _stateMachine.LateUpdate();
+        _attack.AttackLineRender();
     }
 }
