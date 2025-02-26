@@ -5,6 +5,7 @@ Shader "Team3/Glitch"
         [PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
         _Color ("Main Color", Color) = (1,1,1,1)
         
+        _GlitchStrength ("Glitch Strength", Range(0, 1)) = 1
         _GlitchIntensity ("Glitch Intensity", Range(0,1)) = 0.1
         _BlockScale("Block Scale", Range(1,50)) = 10
         _NoiseSpeed("Noise Speed", Range(1,10)) = 10
@@ -80,6 +81,7 @@ Shader "Team3/Glitch"
             float4 _MainTex_ST;
             half4 _TextureSampleAdd;
 
+            float _GlitchStrength;
             float _GlitchIntensity;
             float _BlockScale;
             float _NoiseSpeed;
@@ -129,22 +131,21 @@ Shader "Team3/Glitch"
 
             half4 frag (Varyings input) : SV_Target
             {
-                half4 col = (SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv) + _TextureSampleAdd);
-
+                
                 float2 gv = input.uv;
                 float noise = blockNose(input.uv.y * _BlockScale);
                 noise += random(input.uv.x) * 0.3;
                 float2 randomValue = noiseRandom(float2(input.uv.y, _Time.x * _NoiseSpeed));
-                gv.x += randomValue * sin(sin(_GlitchIntensity) * 0.5) * sin(-sin(noise) * 0.2) * frac(_Time.y);
-                half4 r = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv + float2(frac(perlinNoise(-_Time.y * _NoiseSpeed)) * _SlideScale, 0));
-                half4 g = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv);
-                half4 b = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv - float2(frac(perlinNoise(_Time.y * _NoiseSpeed)) * _SlideScale, 0));
+                gv.x = lerp(gv.x, gv.x + randomValue * sin(sin(_GlitchIntensity) * 0.5) * sin(-sin(noise) * 0.2) * frac(_Time.y), _GlitchStrength);
+                half4 r = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv + float2(frac(perlinNoise(-_Time.y * _NoiseSpeed)) * _SlideScale, 0)) + _TextureSampleAdd;
+                half4 g = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv)  + _TextureSampleAdd;
+                half4 b = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv - float2(frac(perlinNoise(_Time.y * _NoiseSpeed)) * _SlideScale, 0))  + _TextureSampleAdd;
 
                 r.rgb *= r.a;
                 g.rgb *= g.a;
                 b.rgb *= b.a;
 
-                col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
+                half4 col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv)  + _TextureSampleAdd;
                 col.rgb *= col.a;
                 col += half4(r.r, g.g, b.b, (r.a + g.a + b.a) / 3);
                 col.rgb *= col.a;
