@@ -24,7 +24,7 @@ public class BackGroundAnimation : MonoBehaviour
         //分秒
         minutes = (int)GameManager.I.CurrentGameElapsedSeconds / 60;
         seconds = (int)GameManager.I.CurrentGameElapsedSeconds % 60;
-        tex_SurviveTime.text = minutes.ToString("00") + ":" + seconds.ToString("00");
+        tex_SurviveTime.text = /*minutes.ToString("00") + ":" +*/ seconds.ToString("00");
 
         tex_Score.text = GameManager.I.Score.ToString();
 
