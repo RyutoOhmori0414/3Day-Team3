@@ -2,7 +2,7 @@ Shader "Team3/Outline"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
+        [PerRendererData] _MainTex ("Texture", 2D) = "white" {}
         [Space(20)]
         [Header(Outline)]
         [HDR]_OutLineColor ("Color", Color) = (1, 1, 1, 1)
@@ -17,6 +17,7 @@ Shader "Team3/Outline"
         Pass
         {
             Blend SrcAlpha OneMinusSrcAlpha
+            Cull Off
             ZWrite On
             ZTest Off
             
@@ -90,7 +91,8 @@ Shader "Team3/Outline"
         {
             Tags { "LightMode"="UniversalForward" }
             Blend SrcAlpha OneMinusSrcAlpha
-
+            Cull Off
+            
             HLSLPROGRAM
             #pragma vertex vert
             #pragma fragment frag
@@ -148,7 +150,7 @@ Shader "Team3/Outline"
             ZWrite On
             ZTest LEqual
             ColorMask 0
-            Cull Back
+            Cull Off
 
             HLSLPROGRAM
             #pragma vertex ShadowPassVertex
@@ -200,7 +202,7 @@ Shader "Team3/Outline"
 
             ZWrite On
             ColorMask R
-            Cull[_Cull]
+            Cull Off
             
             HLSLPROGRAM
             #pragma vertex vert
@@ -257,7 +259,7 @@ Shader "Team3/Outline"
             }
 
             ZWrite On
-            Cull Back
+            Cull Off
             
             HLSLPROGRAM
             #pragma vertex vert
