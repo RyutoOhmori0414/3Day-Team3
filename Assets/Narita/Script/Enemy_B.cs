@@ -1,5 +1,4 @@
-﻿using TMPro.EditorUtilities;
-using UnityEngine;
+﻿using UnityEngine;
 
 public abstract class Enemy_B : MonoBehaviour, IDamageble
 {
