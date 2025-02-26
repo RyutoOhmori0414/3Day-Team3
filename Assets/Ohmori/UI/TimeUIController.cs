@@ -18,7 +18,7 @@ public sealed class TimeUIController : MonoBehaviour, IGameStartReciever, IGameE
     {
         if (!_isIngame) return;
         
-        _timeText.text = $"{Mathf.FloorToInt(GameManager.I.CurrentGameElapsedSeconds / 60):00}:{(GameManager.I.CurrentGameElapsedSeconds % 60):00}";
+        _timeText.text = $"{Mathf.Max(Mathf.FloorToInt(GameManager.I.CurrentGameElapsedSeconds / 60), 0):00}:{(GameManager.I.CurrentGameElapsedSeconds % 60):00}";
     }
 
     public void GameStart()

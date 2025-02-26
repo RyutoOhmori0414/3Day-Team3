@@ -140,7 +140,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
             yield return null;
         }
 
-        CurrentGameElapsedSeconds = 0.000001f;
+        CurrentGameElapsedSeconds = 0.0f;
         StopGame();
     }
 
