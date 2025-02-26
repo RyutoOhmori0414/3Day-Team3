@@ -9,7 +9,7 @@ public class PlayerMove
     [SerializeField] private Vector3 _speedLimit = new Vector3(5, 2, 5);
 
     [Header("移動速度の軽減速度")]
-    private float _ressRbSpeed = 0.05f;
+    [SerializeField] private float _ressRbSpeed = 0.05f;
 
     [Header("ダッシュ")]
     [SerializeField] private float _dashPower = 6f;

@@ -34,8 +34,11 @@ public class PlayerSound
     [Header("ダッシュストップ")]
     [SerializeField] private AudioSource _dashStop;
 
-    [Header("ダッシュストップ")]
+    [Header("カーブ")]
     [SerializeField] private AudioSource _carb;
+
+    [Header("ダメージ音")]
+    [SerializeField] private AudioSource _damage;
 
     private PlayerControl _playerControl;
 
@@ -44,6 +47,11 @@ public class PlayerSound
         _playerControl = playerControl;
     }
 
+
+    public void Damage()
+    {
+        _damage.Play();
+    }
 
     /// <summary>チャージ音</summary>
     /// <param name="isPlay"></param>
