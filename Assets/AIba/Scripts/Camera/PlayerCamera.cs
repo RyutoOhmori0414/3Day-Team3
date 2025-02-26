@@ -42,8 +42,13 @@ public class PlayerCamera
     private bool _isNoChange = false;
     private PlayerControl _playerControl;
 
-   [SerializeField] private CinemachineImpulseSource _attackImpulse;
 
+    [Header("振動_小")]
+    [SerializeField] private CinemachineImpulseSource _attackImpulseSmaal;
+    [Header("振動_中")]
+    [SerializeField] private CinemachineImpulseSource _attackImpulseMidium;
+    [Header("振動_大")]
+    [SerializeField] private CinemachineImpulseSource _attackImpulseBig;
 
     private CameraType _cameraType = CameraType.Idle;
 
@@ -84,11 +89,19 @@ public class PlayerCamera
         }
     }
 
-    public void ShakeCamera(CameraType cameraType)
+    public void ShakeCamera(CameraShakeType cameraType)
     {
-        if(cameraType == CameraType.Attack)
+        if (cameraType == CameraShakeType.AttackMin)
         {
-            _attackImpulse.GenerateImpulse();
+            _attackImpulseSmaal.GenerateImpulse(1);
+        }
+        else if (cameraType == CameraShakeType.AttackMidium)
+        {
+            _attackImpulseSmaal.GenerateImpulse(2);
+        }
+        else if (cameraType == CameraShakeType.AttackBig)
+        {
+            _attackImpulseSmaal.GenerateImpulse(3);
         }
     }
 
@@ -145,4 +158,11 @@ public enum CameraType
     Idle,
     Move,
     Attack,
+}
+
+public enum CameraShakeType
+{
+    AttackMin,
+    AttackMidium,
+    AttackBig,
 }
