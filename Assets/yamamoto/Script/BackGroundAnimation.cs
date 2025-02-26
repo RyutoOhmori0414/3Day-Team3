@@ -29,23 +29,33 @@ public class BackGroundAnimation : MonoBehaviour
         tex_Score.text = GameManager.I.Score.ToString();
 
         var tex_EnCo = tex_EnemyCount.GetComponent<RectTransform>();
-        tex_EnCo.anchoredPosition = new Vector2(0, -700);
-        tex_EnCo.transform.DOMoveY(650f, time)
-            .SetEase(Ease.InOutQuad);
+
+        {
+            var target = tex_EnemyCount.transform;
+            target.position += new Vector3(0F, -650F, 0F);
+            target.transform.DOLocalMoveY(650F + target.localPosition.y, time)
+                .SetEase(Ease.InOutQuad);
+        }
         
-        var tex_SuTi = tex_SurviveTime.GetComponent<RectTransform>();
-        tex_SuTi.anchoredPosition = new Vector2(0, -815);
-        tex_SuTi.transform.DOMoveY(500f, time)
-            .SetEase(Ease.InOutQuad);
+        {
+            var target = tex_SurviveTime.transform;
+            target.position += new Vector3(0F, -500F, 0F);
+            target.transform.DOLocalMoveY(500F + target.localPosition.y, time)
+                .SetEase(Ease.InOutQuad);
+        }
 
-        var tex_Co = tex_Count.GetComponent<RectTransform>();
-        tex_Co.anchoredPosition = new Vector2(500, -700);
-        tex_Co.transform.DOMoveY(650f, time)
-            .SetEase(Ease.InOutQuad);
+        {
+            var target = tex_Count.transform;
+            target.position += new Vector3(0F, -650F, 0F);
+            target.transform.DOLocalMoveY(650F + target.localPosition.y, time)
+                .SetEase(Ease.InOutQuad);
+        }
 
-        var tex_Ti = tex_Time.GetComponent<RectTransform>();
-        tex_Ti.anchoredPosition = new Vector2(500, -815);
-        tex_Ti.transform.DOMoveY(500f, time)
-            .SetEase(Ease.InOutQuad);
+        {
+            var target = tex_Time.transform;
+            target.position += new Vector3(0F, -500F, 0F);
+            target.transform.DOLocalMoveY(500F + target.localPosition.y, time)
+                .SetEase(Ease.InOutQuad);
+        }
     }
 }
