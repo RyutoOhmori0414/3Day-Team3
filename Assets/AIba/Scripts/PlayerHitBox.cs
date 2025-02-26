@@ -1,13 +1,14 @@
 ﻿using UnityEngine;
 
-public class PlayerHitBox : MonoBehaviour,IDamageble
+public class PlayerHitBox : MonoBehaviour, IDamageble
 {
     [SerializeField] private PlayerControl _playerControl;
 
 
 
-    public void AddDamage(int damagePoint)
+    public bool AddDamage(int damagePoint)
     {
         _playerControl.Hp.Damage(damagePoint);
+        return false;
     }
 }
