@@ -9,6 +9,8 @@ public class BackGroundAnimation : MonoBehaviour
     public TextMeshProUGUI tex_SurviveTime;
     public TextMeshProUGUI tex_Count;
     public TextMeshProUGUI tex_Time;
+    public TextMeshProUGUI tex_Score;
+    public TextMeshProUGUI tex_ScoreName;
 
     [Header("テキストのアニメーション秒数")]
     public float time;
@@ -24,6 +26,8 @@ public class BackGroundAnimation : MonoBehaviour
         minutes = (int)GameManager.I.CurrentReadySeconds / 60;
         seconds = (int)GameManager.I.CurrentReadySeconds % 60;
         tex_SurviveTime.text = minutes + " " +  ":" +  " " + seconds;
+
+        tex_Score.text = GameManager.I.Score.ToString();
 
         var tex_EnCo = tex_EnemyCount.GetComponent<RectTransform>();
         tex_EnCo.anchoredPosition = new Vector2(0, -600);

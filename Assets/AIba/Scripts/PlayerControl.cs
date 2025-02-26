@@ -1,7 +1,7 @@
 ﻿using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour,IDamageble
+public class PlayerControl : MonoBehaviour
 {
     [Header("移動設定")]
     [SerializeField] private PlayerMove _move;
@@ -15,9 +15,18 @@ public class PlayerControl : MonoBehaviour,IDamageble
     [Header("カメラ設定")]
     [SerializeField] private PlayerCamera _cameraSetting;
 
+    [Header("Animation設定")]
+    [SerializeField] private PlayerAnim _anim;
+
+    [Header("Effect設定")]
+    [SerializeField] private PlayerEffect _effect;
 
     [Header("PlayerのRigidbody")]
     [SerializeField] private Rigidbody _rb;
+
+    [Header("プレイヤーのイメージ位置")]
+    [SerializeField] private Transform _playerImage;
+
     [SerializeField] private InputManager _input;
     [SerializeField] private PlayerStateMachine _stateMachine = default;
 
@@ -25,17 +34,24 @@ public class PlayerControl : MonoBehaviour,IDamageble
     public PlayerCamera CameraSetting => _cameraSetting;
     public PlayerAttack Attack => _attack;
     public PlayerHp Hp => _hp;
+    public PlayerAnim Anim => _anim;
+    public PlayerEffect Effect => _effect;
 
+    public Transform PlayerImage => _playerImage;
     public Rigidbody Rb => _rb;
     public InputManager InputM => _input;
 
     void Start()
     {
+        GameManager.I.PlayReady();
+
         _stateMachine.Init(this);
         _move.Init(this);
         _cameraSetting.Init(this);
         _attack.Init(this);
         _hp.Init(this);
+        _anim.Init(this);
+        _effect.Init(this);
     }
 
 
@@ -43,6 +59,10 @@ public class PlayerControl : MonoBehaviour,IDamageble
     {
         _stateMachine.Update();
         _attack.Charge();
+        _attack.ChangeBulletType();
+
+        _anim.AnimUpdata();
+        _effect.EffectUpdata();
     }
 
     private void FixedUpdate()
@@ -55,10 +75,5 @@ public class PlayerControl : MonoBehaviour,IDamageble
     private void LateUpdate()
     {
         _stateMachine.LateUpdate();
-    }
-
-    public void AddDamage(int damagePoint)
-    {
-        _hp.Damage(damagePoint);
     }
 }

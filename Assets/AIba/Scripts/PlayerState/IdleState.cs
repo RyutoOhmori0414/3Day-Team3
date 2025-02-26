@@ -10,6 +10,8 @@ public class IdleState : PlayerStateBase
     {
         _stateMachine.PlayerControl.CameraSetting.ResetChangeCameraCount();
 
+        //アニメーション設定
+        _stateMachine.PlayerControl.Anim.Move(false);
     }
 
     public override void Exit()
