@@ -8,6 +8,8 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     [SerializeField]
     private float _readySeconds = 3f;
 
+    [SerializeField] private float _finishTime = 60f;
+
     public float CurrentReadySeconds { get; private set; }
     public float CurrentGameElapsedSeconds { get; private set; }
 
@@ -67,7 +69,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
         foreach (var root in currentScene.GetRootGameObjects())
         {
-            var recievers = root.GetComponentsInChildren<IGameReadyReciever>();
+            var recievers = root.GetComponentsInChildren<IGameReadyReciever>(true);
 
             foreach (var reciever in recievers)
             {
@@ -82,7 +84,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
         foreach (var root in currentScene.GetRootGameObjects())
         {
-            var recievers = root.GetComponentsInChildren<IGameStartReciever>();
+            var recievers = root.GetComponentsInChildren<IGameStartReciever>(true);
 
             foreach (var reciever in recievers)
             {
@@ -97,7 +99,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
         foreach (var root in currentScene.GetRootGameObjects())
         {
-            var recievers = root.GetComponentsInChildren<IGameEndReciever>();
+            var recievers = root.GetComponentsInChildren<IGameEndReciever>(true);
 
             foreach (var reciever in recievers)
             {
@@ -114,26 +116,32 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
 
     private IEnumerator Ready()
     {
-        while (CurrentReadySeconds < _readySeconds)
+        CurrentReadySeconds = _readySeconds;
+        
+        while (CurrentReadySeconds > 0)
         {
-            CurrentReadySeconds += Time.deltaTime;
+            CurrentReadySeconds -= Time.deltaTime;
 
             yield return null;
         }
 
-        CurrentReadySeconds = _readySeconds;
+        CurrentReadySeconds = 0;
     }
 
     private IEnumerator Play()
     {
         PublishGameStart();
+        CurrentGameElapsedSeconds = _finishTime;
 
-        while (true)
+        while (CurrentGameElapsedSeconds > 0)
         {
-            CurrentGameElapsedSeconds = Time.deltaTime;
+            CurrentGameElapsedSeconds -= Time.deltaTime;
 
             yield return null;
         }
+
+        CurrentGameElapsedSeconds = 0.000001f;
+        StopGame();
     }
 
     private IEnumerator GamePlay()
