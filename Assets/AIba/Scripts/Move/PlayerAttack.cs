@@ -137,6 +137,7 @@ public class PlayerAttack
 
         if (h != _saveInput && h != 0 && speed > _moveAttackCanSpeed)
         {
+            _playerControl.PlayerSound.CurbSound(true);
             _isDoMoveAttack = true;
             _moveAttackCollider.SetActive(true);
             _playerControl.Effect.MoveAttackEffect.SetActive(true);
