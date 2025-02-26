@@ -6,6 +6,8 @@ using Unity.VisualScripting;
 [System.Serializable]
 public class PlayerAttack
 {
+    [Header("溜めの最大回数")] private int _maxChargeCount = 3;
+
     [Header("攻撃のため時間")]
     [SerializeField] private float _attackChageTime = 1;
 
@@ -67,6 +69,10 @@ public class PlayerAttack
 
     private float _saveInput = 0;
 
+    private bool _isOneCharge = false;
+
+    private int _chargeCount = 0;
+
     public bool IsDoMoveAttack => _isDoMoveAttack;
     public bool IsCharge => _isCharge;
 
@@ -76,6 +82,11 @@ public class PlayerAttack
     {
         _playerControl = playerControl;
         _chargeEffect.ForEach(i => i.Stop());
+
+        if (_maxChargeCount > 3)
+        {
+            _maxChargeCount = 3;
+        }
     }
 
     public void ChangeBulletType()
@@ -103,11 +114,11 @@ public class PlayerAttack
     {
         float h = _playerControl.InputM.HorizontalInput;
 
-        if(_isDoMoveAttack)
+        if (_isDoMoveAttack)
         {
             _countMoveAttackTime += Time.deltaTime;
 
-            if(_countMoveAttackTime>_moveAttackDoTime)
+            if (_countMoveAttackTime > _moveAttackDoTime)
             {
                 _isDoMoveAttack = false;
                 _countMoveAttackTime = 0;
@@ -117,7 +128,7 @@ public class PlayerAttack
         }
 
         float speed = Mathf.Abs(_playerControl.Rb.linearVelocity.x);
-        
+
         if (h != _saveInput && h != 0 && speed > _moveAttackCanSpeed)
         {
             _isDoMoveAttack = true;
@@ -138,6 +149,7 @@ public class PlayerAttack
             {
                 _isCoolTime = true;
             }
+            Debug.Log("変える");
             return;
         }
 
@@ -146,13 +158,42 @@ public class PlayerAttack
             _isReleaseAttackButtun = true;
         }   //攻撃ボタンを離したかどうか
 
+        if (_isOneCharge && _isReleaseAttackButtun)
+        {
+            Attack();
+            //UI_チャージ初期設定
+            _playerControl.PlayerUI.ResetChargeUI();
+            _chargeCount = 0;
+            _isOneCharge = false;
+            return;
+        }
+
+
+        if (_isCharge)
+        {
+            //最大ため回数以上はためない
+            if (_chargeCount > _maxChargeCount) return;
+
+            _countChargeTime += Time.deltaTime;
+            if (_countChargeTime > _attackChageTime)
+            {
+                _isOneCharge = true;
+                int f = _chargeCount + 1;
+                _playerControl.PlayerUI.SetGage(f, _attackChageTime, _attackChageTime, true);
+                _chargeCount++;
+                _countChargeTime = 0;
+                return;
+            }
+            int g = _chargeCount + 1;
+            _playerControl.PlayerUI.SetGage(g, _attackChageTime, _countChargeTime, false);
+        }
 
         if (_playerControl.InputM.IsLeftMouseClickDown)
         {
             _isCharge = true;
+            _isChangeCamera = true;
 
             _playerControl.CameraSetting.ChangeCameraPriority(CameraType.Attack);
-            _isChangeCamera = true;
 
             if (_chargeEffect.Count > 0)
             {
@@ -160,16 +201,6 @@ public class PlayerAttack
             }
         }   //攻撃ボタンを押したかどうか
 
-        if (_isCharge)
-        {
-            _countChargeTime += Time.deltaTime;
-        }
-
-
-        if (_countChargeTime > _attackChageTime && _isReleaseAttackButtun)
-        {
-            Attack();
-        }
     }
 
     public void AttackLineRender()
@@ -184,7 +215,6 @@ public class PlayerAttack
             worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
             _lr.SetPosition(1, worldPos);
         }
-
     }
 
     public void Attack()
