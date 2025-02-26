@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 [System.Serializable]
 public class PlayerAttack
 {
-    [Header("溜めの最大回数")] private int _maxChargeCount = 3;
+    [Header("溜めの最大回数")] [SerializeField] private int _maxChargeCount = 3;
 
     [Header("攻撃のため時間")]
     [SerializeField] private float _attackChageTime = 1;
