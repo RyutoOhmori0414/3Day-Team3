@@ -39,6 +39,8 @@ public class PlayerAttack
     [Header("貫通のUI")]
     [SerializeField] private GameObject _penetrationImage;
 
+    [SerializeField] private ScoreManager _scoreManager;
+
     private BulletType _bulletType = BulletType.Penetration;
 
     private float _countChargeTime = 0;
@@ -183,7 +185,7 @@ public class PlayerAttack
 
         Vector3 dir = worldPos - _muzzlePos.position;
         dir.y =0;
-        go?.GetComponent<PlayerBullet>()?.Init(dir);
+        go?.GetComponent<PlayerBullet>()?.Init(dir,_scoreManager);
     }
 
 }
