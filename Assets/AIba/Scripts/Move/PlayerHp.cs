@@ -28,7 +28,7 @@ public class PlayerHp
 
         if (_hp < 0)
         {
-            SingletonSceneManager.I.LoadScene("Result");
+            GameManager.I.StopGame();
         }
 
 
