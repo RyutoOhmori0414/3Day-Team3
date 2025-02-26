@@ -7,10 +7,13 @@ public sealed class SingletonSceneManager : SingletonMonoBehaviour<SingletonScen
     [SerializeField]
     private DissolveSceneChanger _sceneChanger;
 
+    [SerializeField] private BGMManager _bgmManager;
+
     // ロードをする
     [ContextMenu("Test")]
     public void LoadScene(string sceneName)
     {
+        _bgmManager.Play(sceneName);
         StartCoroutine(LoadSceneCoroutine(sceneName));
     }
     
