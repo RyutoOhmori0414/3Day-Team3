@@ -129,6 +129,7 @@ GameObject:
   - component: {fileID: 599809081654706934}
   - component: {fileID: 6619182115891653844}
   - component: {fileID: 16865600927319667}
+  - component: {fileID: 1650269504190068022}
   m_Layer: 0
   m_Name: EnemyLong
   m_TagString: Enemy
@@ -170,6 +171,7 @@ MonoBehaviour:
   _hitDamage: 1
   _life: 5
   _deathEffect: {fileID: 6784212885407252446, guid: 61f35e0b885360d43bd064499d511ade, type: 3}
+  _anim: {fileID: 1650269504190068022}
   _bullet: {fileID: 878820732476136279, guid: f161aa361ce86c24ca0ece2f9bdc640b, type: 3}
   _muzzle: {fileID: 9199890204394476349}
   _interval: 5
@@ -196,3 +198,25 @@ CapsuleCollider:
   m_Height: 1.4397767
   m_Direction: 1
   m_Center: {x: 0, y: -0.033127427, z: 0}
+--- !u!95 &1650269504190068022
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9206830189896485318}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ebc934457dee430479fd3f65b3fd5ab7, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
