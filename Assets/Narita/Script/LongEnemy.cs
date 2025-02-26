@@ -6,7 +6,7 @@ public class LongEnemy : Enemy_B
     [SerializeField, Header("弾の発射位置")] Transform _muzzle;
     [SerializeField, Header("弾の発射間隔")] float _interval = 5;
     float _timer = 0;
-
+    bool _isVisible;
     protected override void Start_S()
     {
         _timer = Time.time;
@@ -17,8 +17,17 @@ public class LongEnemy : Enemy_B
         if (Time.time >= _timer + _interval)
         {
             _timer = Time.time;
+            if (_isVisible == false) return;
             var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
             bullet.GetComponent<EnemyBullet>().AddTarget(_player);
         }
+    }
+    private void OnBecameVisible()
+    {
+        _isVisible = true;
+    }
+    private void OnBecameInvisible()
+    {
+        _isVisible = false;
     }
 }
