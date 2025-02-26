@@ -900,9 +900,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a719f54a1ba859b43a5c9b8ac0d46665, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _isFastPlay: 1
   _move:
     _moveSpeed: 11
     _speedLimit: {x: 8, y: 2, z: 8}
+    _dashPower: 6
+    _dashTime: 0.5
+    _dashCoolTime: 4
   _attack:
     _attackChageTime: 1
     _coolTime: 0.3
@@ -918,11 +922,14 @@ MonoBehaviour:
     _muzzlePos: {fileID: 3325215919889112587}
     _reflectionbullet: {fileID: 6704738874375085048, guid: ef3478d4ce24fa7419744bb18ede45f8, type: 3}
     _penetrationBullet: {fileID: 6704738874375085048, guid: f9584d7b023aafc4e83ceaf6cdd17e65, type: 3}
+    _moveAttackCollider: {fileID: 0}
+    _moveAttackCanSpeed: 3
+    _moveAttackDoTime: 0.5
     _reflectionImage: {fileID: 9180769865731767911}
     _penetrationImage: {fileID: 3687321360545943181}
     _scoreManager: {fileID: 3801076628841590597}
   _hp:
-    _hp: 100
+    _hp: 1
     _hpText: {fileID: 8638801729627084975}
   _cameraSetting:
     _cameraChangeWaitTime: 1
@@ -949,6 +956,18 @@ MonoBehaviour:
   _effect:
     _waveEffect: {fileID: 595637696111533550}
     _waveTime: 2
+    _moveAttackEffect: {fileID: 0}
+    _dash: []
+    _dashStop: {fileID: 0}
+  _ui:
+    _chargeUIPos: {fileID: 0}
+    _chargeUIParent: {fileID: 0}
+    _gageImage1: {fileID: 0}
+    _gageImage2: {fileID: 0}
+    _gageImage3: {fileID: 0}
+    _fillAmountImage1: {fileID: 0}
+    _fillAmountImage2: {fileID: 0}
+    _fillAmountImage3: {fileID: 0}
   _rb: {fileID: 843233957390606699}
   _playerImage: {fileID: 4562524516717107240}
   _input: {fileID: 6296824396061442370}

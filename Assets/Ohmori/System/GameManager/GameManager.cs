@@ -13,7 +13,7 @@ public sealed class GameManager : SingletonMonoBehaviour<GameManager>
     public float CurrentReadySeconds { get; private set; }
     public float CurrentGameElapsedSeconds { get; private set; }
 
-    private int _defeatEnemyCount = 0;
+    public int _defeatEnemyCount = 0;
     private int _score = 0;
 
     /// <summary>現在の倒したEnemy</summary>

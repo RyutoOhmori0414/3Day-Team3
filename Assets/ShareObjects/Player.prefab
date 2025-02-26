@@ -667,7 +667,7 @@ BoxCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 1
   m_ProvidesContacts: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
@@ -856,7 +856,7 @@ MonoBehaviour:
     _penetrationImage: {fileID: 7203893138686105053}
     _scoreManager: {fileID: 5222264348524020731}
   _hp:
-    _hp: 100
+    _hp: 1
     _hpText: {fileID: 1476293021789059078}
   _cameraSetting:
     _cameraChangeWaitTime: 1
