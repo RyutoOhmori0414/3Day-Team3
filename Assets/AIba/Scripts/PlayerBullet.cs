@@ -29,10 +29,14 @@ public class PlayerBullet : MonoBehaviour
 
     private Vector3 _nowDir = default;
 
-    public void Init(Vector3 dir)
+    private ScoreManager _scoreManager;
+
+    public void Init(Vector3 dir,ScoreManager scoreManager)
     {
         _nowDir = dir;
         gameObject.GetComponent<Rigidbody>().linearVelocity = dir.normalized * _speed;
+
+        _scoreManager = scoreManager;
     }
 
 
@@ -60,6 +64,7 @@ public class PlayerBullet : MonoBehaviour
         if (other.gameObject.tag == "Enemy")
         {
             other?.GetComponent<IDamageble>()?.AddDamage(_attackPower);
+            _scoreManager.AddScore(_hitCount, other.gameObject.transform);
         }
 
         if (_bulletType == BulletType.Penetration)

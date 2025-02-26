@@ -10,17 +10,17 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
     int _hitDamage = 1;
     protected GameObject _player;
     [SerializeField] int _life = 5;
+    [SerializeField] GameObject _deathEffect;
     private void Start()
     {
         FindAnyObjectByType<GameManager>().DefeatEnemy();
         Start_S();
-        _player = GameObject.FindGameObjectWithTag("Player");//FindAnyObjectByTypeでやりたいがPlayerがまだないのでこうしている
+        _player = GameObject.FindGameObjectWithTag("Player");
     }
 
     private void Update()
     {
         Update_S();
-        Debug.Assert(_player != null);
         if (_player == null) return;
         var dir = _player.transform.position - transform.position;
 
@@ -69,6 +69,8 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
         _life -= damagePoint;
         if (_life <= 0)
         {
+            var effect = Instantiate(_deathEffect, transform.position, Quaternion.identity);
+            Destroy(effect, 1);
             Destroy(gameObject);
         }
     }

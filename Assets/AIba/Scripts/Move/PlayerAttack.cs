@@ -15,6 +15,17 @@ public class PlayerAttack
     [Header("エフェクト")]
     [SerializeField] private List<ParticleSystem> _chargeEffect = new List<ParticleSystem>();
 
+    [Header("レイヤー")]
+    [SerializeField] private LayerMask _layer;
+    [Header("長さ")]
+    [SerializeField] private float _rayLong = 20;
+    [Header("Y軸の高さ")]
+    [SerializeField] private float _setYPos;
+    [Header("LineRender")]
+    [SerializeField] private LineRenderer _lr;
+
+
+
     [Header("弾を出す位置")]
     [SerializeField] private Transform _muzzlePos;
 
@@ -27,6 +38,8 @@ public class PlayerAttack
     [SerializeField] private GameObject _reflectionImage;
     [Header("貫通のUI")]
     [SerializeField] private GameObject _penetrationImage;
+
+    [SerializeField] private ScoreManager _scoreManager;
 
     private BulletType _bulletType = BulletType.Penetration;
 
@@ -119,6 +132,21 @@ public class PlayerAttack
         }
     }
 
+    public void AttackLineRender()
+    {
+        _lr.SetPosition(0, _muzzlePos.position);
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector3 worldPos = default;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layer))
+        {
+            worldPos = hit.point;
+            worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
+            _lr.SetPosition(1, worldPos);
+        }
+
+    }
+
     public void Attack()
     {
         _playerControl.CameraSetting.ShakeCamera(CameraType.Attack);
@@ -145,9 +173,19 @@ public class PlayerAttack
         }
 
         go.transform.position = _muzzlePos.position;
-        Vector3 dir = _muzzlePos.position - _playerControl.PlayerImage.transform.position;
-        dir.y = 0;
-        go?.GetComponent<PlayerBullet>()?.Init(dir);
+
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        Vector3 worldPos = default;
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layer))
+        {
+            worldPos = hit.point;
+            worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
+        }
+
+        Vector3 dir = worldPos - _muzzlePos.position;
+        dir.y =0;
+        go?.GetComponent<PlayerBullet>()?.Init(dir,_scoreManager);
     }
 
 }
