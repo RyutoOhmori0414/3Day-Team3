@@ -1405,6 +1405,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4442425666718978380, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
+      propertyPath: _isFastPlay
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5222264348524020731, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
       propertyPath: '_scoreUIWorld.Array.data[0]'
       value: 
