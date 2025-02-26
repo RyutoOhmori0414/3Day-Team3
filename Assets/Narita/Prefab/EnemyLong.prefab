@@ -172,6 +172,7 @@ MonoBehaviour:
   _life: 5
   _deathEffect: {fileID: 6784212885407252446, guid: 61f35e0b885360d43bd064499d511ade, type: 3}
   _anim: {fileID: 1650269504190068022}
+  _audio: {fileID: 0}
   _bullet: {fileID: 8824376041768594347, guid: f161aa361ce86c24ca0ece2f9bdc640b, type: 3}
   _muzzle: {fileID: 9199890204394476349}
   _interval: 5
