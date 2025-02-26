@@ -1,7 +1,7 @@
 ﻿using DG.Tweening;
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TitleAnim : MonoBehaviour
 {
@@ -14,7 +14,7 @@ public class TitleAnim : MonoBehaviour
     public float animTime;
 
     [Header("表示するテキスト")]
-    public TextMeshProUGUI startText;
+    public Text startText;
 
     [Header("UIオブジェクト")]
     public GameObject uiObj;
@@ -31,9 +31,8 @@ public class TitleAnim : MonoBehaviour
 
         var stText = startText.GetComponent<RectTransform>();
         stText.anchoredPosition = new Vector2(0, 0);
-        stText.transform.DOScale(new Vector2(2, 2), animTime)
-            .SetEase(Ease.OutElastic);
-        
+        stText.transform.DOScale(new Vector2(2, 2), animTime);
+            
         StartCoroutine(UIAnimWait()); //待機
     }
 
