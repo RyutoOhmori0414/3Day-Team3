@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class ScoreManager : MonoBehaviour
         }
         else
         {
-            UIOnWorld(position);
+            UIOnWorld(position,addScore);
         }
 
         GameManager.I.AddScore(addScore);
@@ -60,13 +61,14 @@ public class ScoreManager : MonoBehaviour
         }
     }
 
-    public void UIOnWorld(Transform enemyPos)
+    public void UIOnWorld(Transform enemyPos,int score)
     {
         for (int i = 0; i < _scoreUIWorld.Count; i++)
         {
             if (_scoreUIWorld[i].activeSelf == false)
             {
                 _scoreUIWorld[i].SetActive(true);
+                _scoreUIWorld[i].transform.GetChild(1).gameObject.GetComponent<Text>().text = score.ToString();
                 // **UIの位置をスクリーン座標に設定**
                 _scoreUIWorld[i].transform.position = enemyPos.position + _offSet;
                 return;

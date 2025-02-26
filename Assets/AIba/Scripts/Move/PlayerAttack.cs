@@ -140,7 +140,8 @@ public class PlayerAttack
             _playerControl.PlayerSound.CurbSound(true);
             _isDoMoveAttack = true;
             _moveAttackCollider.SetActive(true);
-            _playerControl.Effect.MoveAttackEffect.SetActive(true);
+            _playerControl.Effect.MoveAttackEffect.ForEach(i =>i.gameObject.SetActive(true));
+            _playerControl.Effect.MoveAttackEffect.ForEach(i =>i.Play());
         }
 
         _saveInput = h;
@@ -184,6 +185,9 @@ public class PlayerAttack
             _countChargeTime += Time.deltaTime;
             if (_countChargeTime > _attackChageTime)
             {
+                _playerControl.Effect.ChargeEffect.ForEach(i => i.gameObject.SetActive(true));
+                _playerControl.Effect.ChargeEffect.ForEach(i => i.Play());
+
                 _isOneCharge = true;
                 int f = _chargeCount + 1;
                 _playerControl.PlayerUI.SetGage(f, _attackChageTime, _attackChageTime, true);
