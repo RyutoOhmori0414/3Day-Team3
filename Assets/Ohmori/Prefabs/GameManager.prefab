@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2247c3f95add1f41a62dd4500f894de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _readySeconds: 3
+  _readySeconds: 2.5
+  _finishTime: 120
+  _defeatEnemyCount: 0

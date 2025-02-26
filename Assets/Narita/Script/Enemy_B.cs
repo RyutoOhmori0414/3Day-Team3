@@ -13,8 +13,7 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
     [SerializeField] GameObject _deathEffect;
     [SerializeField] Animator _anim;
     private void Start()
-    {
-        FindAnyObjectByType<GameManager>().DefeatEnemy();
+    {    
         Start_S();
         _player = GameObject.FindGameObjectWithTag("Player");
     }
@@ -66,6 +65,7 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
         if (_life <= 0)
         {
             var effect = Instantiate(_deathEffect, transform.position, Quaternion.identity);
+            FindAnyObjectByType<GameManager>().DefeatEnemy();
             Destroy(effect, 1);
             Destroy(gameObject);
             return true;
