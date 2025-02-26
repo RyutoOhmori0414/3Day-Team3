@@ -1,15 +1,15 @@
 ﻿using DG.Tweening;
-using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BackGroundAnimation : MonoBehaviour
 {
     [Header("リザルトテキスト")]
-    public TextMeshProUGUI tex_EnemyCount;
-    public TextMeshProUGUI tex_SurviveTime;
-    public TextMeshProUGUI tex_Count;
-    public TextMeshProUGUI tex_Time;
-    public TextMeshProUGUI tex_Score;
+    public Text tex_EnemyCount;
+    public Text tex_SurviveTime;
+    public Text tex_Count;
+    public Text tex_Time;
+    public Text tex_Score;
     
     [Header("テキストのアニメーション秒数")]
     public float time;
