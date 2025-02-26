@@ -27,6 +27,9 @@ public class PlayerCamera
     [Header("視野角の変更速度_減らす")]
     [SerializeField] float _FOVChangeSpeedRemove = 0.6f;
 
+
+    [Header("プレイヤーの中心")]
+    [SerializeField] private GameObject _playerCenter;
     [Header("グループカメラのターゲット")]
     [SerializeField] private GameObject _groupTarget;
 
@@ -52,27 +55,6 @@ public class PlayerCamera
     void Start()
     {
         //_follow.FollowOffset = new Vector3(2, 4.1f, -6.55f);
-    }
-
-    // Update is called once per frame
-    public void CameraGroupSetting()
-    {
-        // **マウスのスクリーン座標を取得**
-        Vector3 mouseScreenPos = Input.mousePosition;
-
-        // **画面の幅と高さを取得**
-        float screenWidth = Screen.width;
-        float screenHeight = Screen.height;
-
-        // **マウスの座標を 0.0 〜 1.0 に正規化**
-        float normalizedX = Mathf.Clamp01(mouseScreenPos.x / screenWidth);
-        float normalizedY = Mathf.Clamp01(mouseScreenPos.y / screenHeight);
-
-        // **マウス位置を基準にY軸の角度を計算**
-        float targetAngle = Mathf.Atan2(normalizedX - 0.5f, normalizedY - 0.5f) * Mathf.Rad2Deg;
-
-        // **Y軸のみ回転**
-        _groupTarget.transform.rotation = Quaternion.Euler(0f, targetAngle, 0f);
     }
 
     public void ResetChangeCameraCount()

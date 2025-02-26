@@ -130,7 +130,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletType: 1
-  _speed: 17
+  _speed:
+  - 15
+  - 20
+  - 25
   _attackPower: 7
   _lifeTime: 20
   _hitNum: 10

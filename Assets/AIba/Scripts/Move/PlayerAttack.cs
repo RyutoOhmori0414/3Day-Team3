@@ -24,6 +24,13 @@ public class PlayerAttack
     [SerializeField] private float _setYPos;
     [Header("LineRender")]
     [SerializeField] private LineRenderer _lr;
+    [Header("ファンネル")]
+    [SerializeField] private Transform _fannel;
+    [Header("ファンネルマズル")]
+    [SerializeField] private Transform _fannelMuzzle;
+
+    [Header("回転させる中央部分")]
+    [SerializeField] private Transform _centerPos;
 
     [Header("弾を出す位置")]
     [SerializeField] private Transform _muzzlePos;
@@ -208,9 +215,34 @@ public class PlayerAttack
 
     }
 
+    /// <summary>ファンネル</summary>
     public void AttackLineRender()
     {
-        _lr.SetPosition(0, _muzzlePos.position);
+
+        // **マウスのスクリーン座標を取得**
+        Vector3 mouseScreenPos = Input.mousePosition;
+        mouseScreenPos.z = Vector3.Distance(Camera.main.transform.position, _centerPos.transform.position);
+
+        // **スクリーン座標をワールド座標に変換**
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+
+        // **プレイヤーからマウス方向のベクトルを計算**
+        Vector3 direction = (mouseWorldPos - _centerPos.transform.position).normalized;
+
+        // **Y軸の回転のみ適用するため、Y成分を固定**
+        direction.y = 0;
+
+        // **オブジェクトをマウスの方向に回転**
+        if (direction.sqrMagnitude > 0.01f) // ゼロベクトルを回避
+        {
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            _centerPos.transform.rotation = targetRotation;
+        }
+
+        _lr.SetPosition(0, _fannelMuzzle.position);
+
+        Vector3 pos = _fannelMuzzle.position + (_fannelMuzzle.position - _centerPos.transform.position) * 20;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         Vector3 worldPos = default;
@@ -218,8 +250,9 @@ public class PlayerAttack
         {
             worldPos = hit.point;
             worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
-            _lr.SetPosition(1, worldPos);
+            _lr.SetPosition(1, pos);
         }
+
     }
 
     public void Attack()
@@ -248,19 +281,28 @@ public class PlayerAttack
             count = 5;
         }
 
+        int c = _chargeCount;
 
+        if (c < 0)
+        {
+            c = 0;
+        }
+        else if (c > 3)
+        {
+            c = 3;
+        }
         if (_bulletType == BulletType.Reflection)
         {
-            ReflectionbulletSpown(count);
+            ReflectionbulletSpown(count, c);
         }
         else
         {
-            Penetrati0nBulletSpown(count);
+            Penetrati0nBulletSpown(count, c);
         }
         _chargeCount = 0;
     }
 
-    public void Penetrati0nBulletSpown(int i)
+    public void Penetrati0nBulletSpown(int i, int c)
     {
         for (int j = 0; j < i; j++)
         {
@@ -276,7 +318,7 @@ public class PlayerAttack
                 worldPos = hit.point;
                 worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
             }
-            Vector3 dir = worldPos - _muzzlePos.position;
+            Vector3 dir = _fannel.position - _centerPos.position;
             if (j == 1)
             {
                 dir = Quaternion.Euler(0, 10, 0) * dir;
@@ -295,11 +337,11 @@ public class PlayerAttack
             }
             dir.y = 0;
 
-            go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager);
+            go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager, c - 1);
         }
     }
 
-    public void ReflectionbulletSpown(int i)
+    public void ReflectionbulletSpown(int i, int c)
     {
         for (int j = 0; j < i; j++)
         {
@@ -315,7 +357,7 @@ public class PlayerAttack
                 worldPos = hit.point;
                 worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
             }
-            Vector3 dir = worldPos - _muzzlePos.position;
+            Vector3 dir = _fannel.position - _centerPos.position;
             if (j == 1)
             {
                 dir = Quaternion.Euler(0, 30, 0) * dir;
@@ -324,18 +366,19 @@ public class PlayerAttack
             {
                 dir = Quaternion.Euler(0, -30, 0) * dir;
             }
-            else if(j == 3)
+            else if (j == 3)
             {
                 dir = Quaternion.Euler(0, 40, 0) * dir;
             }
-            else if(j==4)
+            else if (j == 4)
             {
                 dir = Quaternion.Euler(0, -40, 0) * dir;
             }
 
             dir.y = 0;
 
-            go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager);
+
+            go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager, c - 1);
         }
     }
 
