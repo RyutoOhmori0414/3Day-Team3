@@ -235,7 +235,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dissolveShader: {fileID: 4800000, guid: 2a0557c855593714dab116490a46b650, type: 3}
   _dissolveTex: {fileID: 2800000, guid: 269cf29fc1500ac4897165376e5b1666, type: 3}
-  _dissolveColor: {r: 3.1320755, g: 0.25115705, b: 2.30024, a: 0}
-  _dissolveDuration: 3
+  _dissolveColor: {r: 0.6233605, g: 2.3559988, b: 2.6860259, a: 0}
+  _dissolveDuration: 1.2
   _dissolvePanel: {fileID: 2097020325767080807}
-  _renderTexture: {fileID: 8400000, guid: 88eb99f03bdece64ab66a41f13e680be, type: 2}
