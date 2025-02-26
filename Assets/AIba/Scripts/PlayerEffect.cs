@@ -14,6 +14,9 @@ public class PlayerEffect
     [Header("移動の風のエフェクト")]
     [SerializeField] private GameObject _moveAttackEffect;
 
+    [Header("ダッシュ")]
+    [SerializeField] private List<GameObject> _dash = new List<GameObject>();
+
     private float _countWaveTime = 0;
 
     private float _saveInput = 0;
@@ -24,6 +27,7 @@ public class PlayerEffect
 
     private PlayerControl _playerControl;
 
+    public List<GameObject> Dash => _dash;
     public GameObject MoveAttackEffect => _moveAttackEffect;
 
     public void Init(PlayerControl playerControl)

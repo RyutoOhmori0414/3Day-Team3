@@ -105,6 +105,7 @@ public class PlayerMove
         if (_playerControl.InputM.IsLeftShiftDown)
         {
             _isDoDah = true;
+            _playerControl.Effect.Dash.ForEach(i => i.SetActive(true));
         }
 
     }
