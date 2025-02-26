@@ -1818,6 +1818,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1935249404917577354, guid: b00243fd0f15cb949b39fa3378039949, type: 3}
+      propertyPath: '_enemiesList.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9206830189896485318, guid: cde7f10421cef224fa8fbb1dbb211626, type: 3}
+    - target: {fileID: 1935249404917577354, guid: b00243fd0f15cb949b39fa3378039949, type: 3}
+      propertyPath: '_enemiesList.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1744842792597184321, guid: ad8b3d72a460ba248a47fef9ae087083, type: 3}
     - target: {fileID: 3346024005855851504, guid: b00243fd0f15cb949b39fa3378039949, type: 3}
       propertyPath: m_LocalPosition.x
       value: -30.5
