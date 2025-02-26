@@ -8,6 +8,7 @@ Shader "Team3/Glitch"
         _GlitchIntensity ("Glitch Intensity", Range(0,1)) = 0.1
         _BlockScale("Block Scale", Range(1,50)) = 10
         _NoiseSpeed("Noise Speed", Range(1,10)) = 10
+        _SlideScale("Slide", Range(0.0, 0.3)) = 0.1
 
         _StencilComp ("Stencil Comparison", Float) = 8
         _Stencil ("Stencil ID", Float) = 0
@@ -21,7 +22,7 @@ Shader "Team3/Glitch"
     }
     SubShader
     {
-        Tags { "RenderType"="Opaque" }
+        Tags { "RenderType"="Transparent" }
         LOD 100
 
         Tags
@@ -62,12 +63,14 @@ Shader "Team3/Glitch"
             {
                 float4 positionOS : POSITION;
                 float2 uv : TEXCOORD0;
+                float4 color : COLOR;
             };
 
             struct Varyings
             {
                 float2 uv : TEXCOORD0;
                 float4 positionCS : SV_POSITION;
+                float4 color : COLOR;
             };
 
             TEXTURE2D(_MainTex); SAMPLER(sampler_MainTex);
@@ -80,6 +83,7 @@ Shader "Team3/Glitch"
             float _GlitchIntensity;
             float _BlockScale;
             float _NoiseSpeed;
+            float _SlideScale;
             CBUFFER_END
 
             inline float random(float2 seeds)
@@ -95,6 +99,22 @@ Shader "Team3/Glitch"
             inline float noiseRandom(float2 seeds)
             {
                 return -1.0 + 2.0 * blockNose(seeds);
+            }
+
+            float perlinNoise(half2 st)
+            {
+                half2 p = floor(st);
+                half2 f = frac(st);
+                half2 u = f * f * (3.0 - 2.0 * f);
+
+                float v00 = random(p + half2(0, 0));
+                float v10 = random(p + half2(1, 0));
+                float v01 = random(p + half2(0, 1));
+                float v11 = random(p + half2(1, 1));
+
+                return lerp(lerp(dot(v00, f - half2(0, 0)), dot(v10, f - half2(1, 0)), u.x),
+                            lerp(dot(v01, f - half2(0, 1)), dot(v11, f - half2(1, 1)), u.x),
+                            u.y) + 0.5f;
             }
 
             Varyings vert (Attributes input)
@@ -114,13 +134,20 @@ Shader "Team3/Glitch"
                 float2 gv = input.uv;
                 float noise = blockNose(input.uv.y * _BlockScale);
                 noise += random(input.uv.x) * 0.3;
-                float2 randomValue = noiseRandom(float2(input.uv.y, _Time.y * _NoiseSpeed));
+                float2 randomValue = noiseRandom(float2(input.uv.y, _Time.x * _NoiseSpeed));
                 gv.x += randomValue * sin(sin(_GlitchIntensity) * 0.5) * sin(-sin(noise) * 0.2) * frac(_Time.y);
-                col.r = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv + float2(0.0006, 0)).r;
-                col.g = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv).g;
-                col.b = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv - float2(0.008, 0)).b;
-                col.a = 1.0;
-                
+                half4 r = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv + float2(frac(perlinNoise(-_Time.y * _NoiseSpeed)) * _SlideScale, 0));
+                half4 g = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv);
+                half4 b = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, gv - float2(frac(perlinNoise(_Time.y * _NoiseSpeed)) * _SlideScale, 0));
+
+                r.rgb *= r.a;
+                g.rgb *= g.a;
+                b.rgb *= b.a;
+
+                col = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, input.uv);
+                col.rgb *= col.a;
+                col += half4(r.r, g.g, b.b, (r.a + g.a + b.a) / 3);
+                col.rgb *= col.a;
                 return col;
             }
             ENDHLSL
