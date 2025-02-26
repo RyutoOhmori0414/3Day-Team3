@@ -69,7 +69,7 @@ public class PlayerBullet : MonoBehaviour
 
         if (_bulletType == BulletType.Penetration)
         {
-            if (other.gameObject.tag != "Enemy")
+            if (other.gameObject.tag == "Wall")
             {
                 Destroy(gameObject);
             }
@@ -99,7 +99,7 @@ public class PlayerBullet : MonoBehaviour
             _nowDir = reflectDir;
             _nowDir.y = 0;
 
-            gameObject.GetComponent<Rigidbody>().linearVelocity = _nowDir * _speed;
+            gameObject.GetComponent<Rigidbody>().linearVelocity = _nowDir.normalized * _speed;
 
             if (_hitCount == _hitNum)
             {

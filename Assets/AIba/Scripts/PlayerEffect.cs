@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class PlayerEffect
@@ -10,6 +11,9 @@ public class PlayerEffect
     [Header("移動の風のエフェクトがでるまでの時間")]
     [SerializeField] private float _waveTime = 2;
 
+    [Header("移動の風のエフェクト")]
+    [SerializeField] private GameObject _moveAttackEffect;
+
     private float _countWaveTime = 0;
 
     private float _saveInput = 0;
@@ -19,6 +23,8 @@ public class PlayerEffect
     private bool _isV = false;
 
     private PlayerControl _playerControl;
+
+    public GameObject MoveAttackEffect => _moveAttackEffect;
 
     public void Init(PlayerControl playerControl)
     {

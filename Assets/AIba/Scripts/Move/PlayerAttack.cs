@@ -24,8 +24,6 @@ public class PlayerAttack
     [Header("LineRender")]
     [SerializeField] private LineRenderer _lr;
 
-
-
     [Header("弾を出す位置")]
     [SerializeField] private Transform _muzzlePos;
 
@@ -34,11 +32,19 @@ public class PlayerAttack
     [Header("貫通弾")]
     [SerializeField] private GameObject _penetrationBullet;
 
+    [Header("移動転換アタックのコライダー")]
+    [SerializeField] private GameObject _moveAttackCollider;
+    [Header("移動転換アタックが可能な速度")]
+    [SerializeField] private float _moveAttackCanSpeed = 3;
+    [Header("移動転換アタックの実行時間")]
+    [SerializeField] private float _moveAttackDoTime = 0.5f;
+
+
+
     [Header("反射のUI")]
     [SerializeField] private GameObject _reflectionImage;
     [Header("貫通のUI")]
     [SerializeField] private GameObject _penetrationImage;
-
     [SerializeField] private ScoreManager _scoreManager;
 
     private BulletType _bulletType = BulletType.Penetration;
@@ -56,7 +62,12 @@ public class PlayerAttack
     private bool _isReleaseAttackButtun = false;
 
 
+    private float _countMoveAttackTime = 0;
+    private bool _isDoMoveAttack = false;
 
+    private float _saveInput = 0;
+
+    public bool IsDoMoveAttack => _isDoMoveAttack;
     public bool IsCharge => _isCharge;
 
     private PlayerControl _playerControl;
@@ -86,6 +97,35 @@ public class PlayerAttack
                 _reflectionImage.SetActive(true);
             }
         }
+    }
+
+    public void MoveAttack()
+    {
+        float h = _playerControl.InputM.HorizontalInput;
+
+        if(_isDoMoveAttack)
+        {
+            _countMoveAttackTime += Time.deltaTime;
+
+            if(_countMoveAttackTime>_moveAttackDoTime)
+            {
+                _isDoMoveAttack = false;
+                _countMoveAttackTime = 0;
+                _moveAttackCollider.SetActive(false);
+            }
+            return;
+        }
+
+        float speed = Mathf.Abs(_playerControl.Rb.linearVelocity.x);
+        
+        if (h != _saveInput && h != 0 && speed > _moveAttackCanSpeed)
+        {
+            _isDoMoveAttack = true;
+            _moveAttackCollider.SetActive(true);
+            _playerControl.Effect.MoveAttackEffect.SetActive(true);
+        }
+
+        _saveInput = h;
     }
 
     public void Charge()
@@ -184,8 +224,8 @@ public class PlayerAttack
         }
 
         Vector3 dir = worldPos - _muzzlePos.position;
-        dir.y =0;
-        go?.GetComponent<PlayerBullet>()?.Init(dir,_scoreManager);
+        dir.y = 0;
+        go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager);
     }
 
 }

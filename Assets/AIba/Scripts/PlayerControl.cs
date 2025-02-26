@@ -1,8 +1,11 @@
 ﻿using Unity.VisualScripting;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public class PlayerControl : MonoBehaviour, IGameStartReciever
 {
+    [Header("Debug_FastPlay")]
+    [SerializeField] private bool _isFastPlay = true;
+
     [Header("移動設定")]
     [SerializeField] private PlayerMove _move;
 
@@ -30,6 +33,8 @@ public class PlayerControl : MonoBehaviour
     [SerializeField] private InputManager _input;
     [SerializeField] private PlayerStateMachine _stateMachine = default;
 
+    private bool _isCanMove = false;
+
     public PlayerMove Move => _move;
     public PlayerCamera CameraSetting => _cameraSetting;
     public PlayerAttack Attack => _attack;
@@ -43,8 +48,6 @@ public class PlayerControl : MonoBehaviour
 
     void Start()
     {
-        GameManager.I.PlayReady();
-
         _stateMachine.Init(this);
         _move.Init(this);
         _cameraSetting.Init(this);
@@ -52,14 +55,18 @@ public class PlayerControl : MonoBehaviour
         _hp.Init(this);
         _anim.Init(this);
         _effect.Init(this);
+        _isCanMove = _isFastPlay;
     }
 
 
     void Update()
     {
+        if (!_isCanMove) return;
         _stateMachine.Update();
         _attack.Charge();
         _attack.ChangeBulletType();
+        _attack.MoveAttack();
+        _move.Dash();
 
         _anim.AnimUpdata();
         _effect.EffectUpdata();
@@ -67,6 +74,7 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (!_isCanMove) return;
         _stateMachine.FixedUpdate();
 
         // Debug.Log(_rb.linearVelocity);
@@ -74,7 +82,14 @@ public class PlayerControl : MonoBehaviour
 
     private void LateUpdate()
     {
+        if (!_isCanMove) return;
+
         _stateMachine.LateUpdate();
         _attack.AttackLineRender();
+    }
+
+    public void GameStart()
+    {
+        _isCanMove = true;
     }
 }
