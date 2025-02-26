@@ -34,13 +34,29 @@ public class PlayerSound
     [Header("ダッシュストップ")]
     [SerializeField] private AudioSource _dashStop;
 
-
+    [Header("ダッシュストップ")]
+    [SerializeField] private AudioSource _carb;
 
     private PlayerControl _playerControl;
 
     public void Init(PlayerControl playerControl)
     {
         _playerControl = playerControl;
+    }
+
+
+    /// <summary>チャージ音</summary>
+    /// <param name="isPlay"></param>
+    public void CurbSound(bool isPlay)
+    {
+        if (isPlay)
+        {
+            _carb.Play();
+        }
+        else
+        {
+            _carb.Stop();
+        }
     }
 
     /// <summary>チャージ音</summary>
