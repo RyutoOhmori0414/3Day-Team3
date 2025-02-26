@@ -14,17 +14,14 @@ public class BackGroundAnimation : MonoBehaviour
     [Header("テキストのアニメーション秒数")]
     public float time;
 
-    private int minutes;
-    private int seconds;
+    private int sTime; //生存時間計算
 
     void Start()
     {
         tex_EnemyCount.text = GameManager.I.DefeatEnemyCount.ToString();
-        
-        //分秒
-        minutes = (int)GameManager.I.CurrentGameElapsedSeconds / 60;
-        seconds = (int)GameManager.I.CurrentGameElapsedSeconds % 60;
-        tex_SurviveTime.text = /*minutes.ToString("00") + ":" +*/ seconds.ToString("00");
+
+        sTime = 60 - (int)GameManager.I.CurrentGameElapsedSeconds;
+        tex_SurviveTime.text = sTime.ToString();
 
         tex_Score.text = GameManager.I.Score.ToString();
 
