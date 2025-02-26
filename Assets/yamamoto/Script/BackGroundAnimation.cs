@@ -32,29 +32,29 @@ public class BackGroundAnimation : MonoBehaviour
 
         {
             var target = tex_EnemyCount.transform;
-            target.position += new Vector3(0F, -650F, 0F);
-            target.transform.DOLocalMoveY(650F + target.localPosition.y, time)
+            target.position += new Vector3(1500F, 0F, 0F);
+            target.transform.DOLocalMoveX(-1500F + target.localPosition.x, time)
                 .SetEase(Ease.InOutQuad);
         }
         
         {
             var target = tex_SurviveTime.transform;
-            target.position += new Vector3(0F, -500F, 0F);
-            target.transform.DOLocalMoveY(500F + target.localPosition.y, time)
+            target.position += new Vector3(1500F, 0F, 0F);
+            target.transform.DOLocalMoveX(-1500F + target.localPosition.x, time)
                 .SetEase(Ease.InOutQuad);
         }
 
-        {
-            var target = tex_Count.transform;
-            target.position += new Vector3(0F, -650F, 0F);
-            target.transform.DOLocalMoveY(650F + target.localPosition.y, time)
-                .SetEase(Ease.InOutQuad);
-        }
+        //{
+        //    var target = tex_Count.transform;
+        //    target.position += new Vector3(1500F, 0F, 0F);
+        //    target.transform.DOLocalMoveX(-1500F + target.localPosition.x, time)
+        //        .SetEase(Ease.InOutQuad);
+        //}
 
         {
             var target = tex_Time.transform;
-            target.position += new Vector3(0F, -500F, 0F);
-            target.transform.DOLocalMoveY(500F + target.localPosition.y, time)
+            target.position += new Vector3(1500F, 0F, 0F);
+            target.transform.DOLocalMoveX(-1500F + target.localPosition.x, time)
                 .SetEase(Ease.InOutQuad);
         }
     }
