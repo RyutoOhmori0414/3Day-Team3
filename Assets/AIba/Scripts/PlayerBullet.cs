@@ -1,6 +1,7 @@
 ﻿using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using System.Collections.Generic;
 
 public class PlayerBullet : MonoBehaviour
 {
@@ -8,7 +9,7 @@ public class PlayerBullet : MonoBehaviour
     [SerializeField] private BulletType _bulletType;
 
     [Header("速度")]
-    [SerializeField] private float _speed = 7;
+    [SerializeField] private List<float> _speed = new List<float>();
 
     [Header("威力")]
     [SerializeField] private int _attackPower = 7;
@@ -31,10 +32,13 @@ public class PlayerBullet : MonoBehaviour
 
     private ScoreManager _scoreManager;
 
-    public void Init(Vector3 dir, ScoreManager scoreManager)
+    private int _level;
+
+    public void Init(Vector3 dir, ScoreManager scoreManager, int level)
     {
+        _level = level;
         _nowDir = dir;
-        gameObject.GetComponent<Rigidbody>().linearVelocity = dir.normalized * _speed;
+        gameObject.GetComponent<Rigidbody>().linearVelocity = dir.normalized * _speed[_level];
 
         _scoreManager = scoreManager;
     }
@@ -103,7 +107,7 @@ public class PlayerBullet : MonoBehaviour
             _nowDir = reflectDir;
             _nowDir.y = 0;
 
-            gameObject.GetComponent<Rigidbody>().linearVelocity = _nowDir.normalized * _speed;
+            gameObject.GetComponent<Rigidbody>().linearVelocity = _nowDir.normalized * _speed[_level];
 
             if (_hitCount == _hitNum)
             {

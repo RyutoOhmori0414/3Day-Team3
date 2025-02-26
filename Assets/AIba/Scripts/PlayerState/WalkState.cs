@@ -47,7 +47,6 @@ public class WalkState : PlayerStateBase
         {
             _stateMachine.PlayerControl.CameraSetting.ChangeCamera(CameraType.Move, false);
         }
-        _stateMachine.PlayerControl.CameraSetting.CameraGroupSetting();
 
         if (h == 0 && v == 0)
         {

@@ -47,8 +47,6 @@ public class IdleState : PlayerStateBase
             _stateMachine.PlayerControl.CameraSetting.ChangeCamera(CameraType.Idle, false);
         }
 
-        _stateMachine.PlayerControl.CameraSetting.CameraGroupSetting();
-
         if (h != 0 || v != 0)
         {
             _stateMachine.TransitionTo(_stateMachine.StateWalk);
