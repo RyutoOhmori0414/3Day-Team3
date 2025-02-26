@@ -33,19 +33,13 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
             transform.position += -dir.normalized * _moveSpeed * Time.deltaTime;
         }
 
-        dir.y = 0;
-        var cross = Vector3.Cross(transform.forward, dir);
-        if (cross.y < 0 && transform.localScale.x > 0)
+        if (dir.x > 0 && transform.localScale.x > 0)
         {
-            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, 1);
+            transform.localScale = new Vector3(-0.25f, 0.25f, 1);
         }
-        if (cross.y > 0 && transform.localScale.x < 0)
+        if (dir.x < 0 && transform.localScale.x < 0)
         {
-            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1);
-        }
-        else
-        {
-            return;
+            transform.localScale = new Vector3(0.25f, 0.25f, 1);
         }
     }
 
