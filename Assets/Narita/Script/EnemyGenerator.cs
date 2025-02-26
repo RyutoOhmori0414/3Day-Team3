@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyGenerator : MonoBehaviour
+public class EnemyGenerator : MonoBehaviour, IGameStartReciever
 {
     [SerializeField, Header("スポーンする場所")]
     List<Transform> _spawnPosList;
@@ -14,14 +14,16 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField, Header("敵のリスト")]
     List<GameObject> _enemiesList;
     float _timer;
+    bool _isStarted;
 
-    void Start()
+    public void GameStart()
     {
-
+        _isStarted = true;
     }
 
     void Update()
     {
+        if (!_isStarted) return;
         if (_enemiesList.Count != 0 && _spawnPosList.Count != 0)
         {
             if (Time.time >= _timer + _spawnInterval)
