@@ -50,6 +50,8 @@ public class PlayerHp
         _hpText.text = _hp.ToString();
         _isDamage = true;
         _scoreManager.DissScore();
+
+        _playerControl.PlayerSound.Damage();
         if (_hp < 0)
         {
             GameManager.I.StopGame();

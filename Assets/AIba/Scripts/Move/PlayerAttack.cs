@@ -16,6 +16,11 @@ public class PlayerAttack
     [Header("エフェクト")]
     [SerializeField] private List<ParticleSystem> _chargeEffect = new List<ParticleSystem>();
 
+    [Header("ファンネル_2段階目")]
+    [SerializeField] private List<GameObject> _fannelCharge2 = new List<GameObject>();
+
+    [Header("ファンネル_3段階目")]
+    [SerializeField] private List<GameObject> _fannelCharge3 = new List<GameObject>();
     [Header("レイヤー")]
     [SerializeField] private LayerMask _layer;
     [Header("長さ")]
@@ -140,8 +145,8 @@ public class PlayerAttack
             _playerControl.PlayerSound.CurbSound(true);
             _isDoMoveAttack = true;
             _moveAttackCollider.SetActive(true);
-            _playerControl.Effect.MoveAttackEffect.ForEach(i =>i.gameObject.SetActive(true));
-            _playerControl.Effect.MoveAttackEffect.ForEach(i =>i.Play());
+            _playerControl.Effect.MoveAttackEffect.ForEach(i => i.gameObject.SetActive(true));
+            _playerControl.Effect.MoveAttackEffect.ForEach(i => i.Play());
         }
 
         _saveInput = h;
@@ -157,7 +162,6 @@ public class PlayerAttack
             {
                 _isCoolTime = true;
             }
-            Debug.Log("変える");
             return;
         }
 
@@ -172,7 +176,7 @@ public class PlayerAttack
             //UI_チャージ初期設定
             _playerControl.PlayerUI.ResetChargeUI();
             _isOneCharge = false;
-            Debug.Log("ボタンを離した");
+
             return;
         }
 
@@ -201,9 +205,18 @@ public class PlayerAttack
                 {
                     //チャージ音_最大ため
                     _playerControl.PlayerSound.ChargeKeepSound(true);
+                    _fannelCharge3.ForEach(i => i.gameObject.SetActive(true));
                 }
-                else
+                else if (_chargeCount == 2)
                 {
+
+                    _fannelCharge2.ForEach(i => i.gameObject.SetActive(true));
+                    //チャージ音
+                    _playerControl.PlayerSound.ChargeSound(true);
+                }
+                else if (_chargeCount == 1)
+                {
+
                     //チャージ音
                     _playerControl.PlayerSound.ChargeSound(true);
                 }
@@ -220,6 +233,9 @@ public class PlayerAttack
 
         if (_playerControl.InputM.IsLeftMouseClickDown)
         {
+            _fannelCharge2.ForEach(i => i.GetComponent<Animator>().SetBool("End", false));
+            _fannelCharge3.ForEach(i => i.GetComponent<Animator>().SetBool("End", false));
+
             //チャージ音
             _playerControl.PlayerSound.ChargeSound(true);
 
@@ -241,7 +257,6 @@ public class PlayerAttack
     /// <summary>ファンネル</summary>
     public void AttackLineRender()
     {
-
         // **マウスのスクリーン座標を取得**
         Vector3 mouseScreenPos = Input.mousePosition;
         mouseScreenPos.z = Vector3.Distance(Camera.main.transform.position, _centerPos.transform.position);
@@ -305,11 +320,14 @@ public class PlayerAttack
         if (_chargeCount == 2)
         {
             _playerControl.CameraSetting.ShakeCamera(CameraShakeType.AttackMidium);
+            _fannelCharge2.ForEach(i => i.GetComponent<Animator>().SetBool("End", true));
             count = 3;
         }
         else if (_chargeCount == 3)
         {
             _playerControl.CameraSetting.ShakeCamera(CameraShakeType.AttackBig);
+            _fannelCharge2.ForEach(i => i.GetComponent<Animator>().SetBool("End", true));
+            _fannelCharge3.ForEach(i => i.GetComponent<Animator>().SetBool("End", true));
             count = 5;
         }
 
