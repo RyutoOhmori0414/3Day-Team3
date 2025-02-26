@@ -24,8 +24,12 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
     [Header("Effect設定")]
     [SerializeField] private PlayerEffect _effect;
 
+    [Header("UI")]
+    [SerializeField] private PlayerUI _ui;
+
     [Header("PlayerのRigidbody")]
     [SerializeField] private Rigidbody _rb;
+
 
     [Header("プレイヤーのイメージ位置")]
     [SerializeField] private Transform _playerImage;
@@ -41,7 +45,7 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
     public PlayerHp Hp => _hp;
     public PlayerAnim Anim => _anim;
     public PlayerEffect Effect => _effect;
-
+    public PlayerUI PlayerUI => _ui;
     public Transform PlayerImage => _playerImage;
     public Rigidbody Rb => _rb;
     public InputManager InputM => _input;
@@ -56,6 +60,7 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
         _anim.Init(this);
         _effect.Init(this);
         _isCanMove = _isFastPlay;
+        _ui.Init(this);
     }
 
 
@@ -70,6 +75,7 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
 
         _anim.AnimUpdata();
         _effect.EffectUpdata();
+        _ui.ChargeUIPosition();
     }
 
     private void FixedUpdate()
