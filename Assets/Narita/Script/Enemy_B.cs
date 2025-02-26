@@ -37,11 +37,11 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
         var cross = Vector3.Cross(transform.forward, dir);
         if (cross.y < 0 && transform.localScale.x > 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, 1);
         }
         if (cross.y > 0 && transform.localScale.x < 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, 1);
         }
         else
         {
