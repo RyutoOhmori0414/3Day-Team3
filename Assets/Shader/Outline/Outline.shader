@@ -18,7 +18,7 @@ Shader "Team3/Outline"
         {
             Blend SrcAlpha OneMinusSrcAlpha
             Cull Off
-            ZWrite On
+            ZWrite Off
             ZTest Off
             
             Stencil
