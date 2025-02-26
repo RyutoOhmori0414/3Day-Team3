@@ -257,8 +257,6 @@ public class PlayerAttack
 
     public void Attack()
     {
-        _playerControl.CameraSetting.ShakeCamera(CameraType.Attack);
-
         _isCharge = false;
         _isChangeCamera = false;
         _isCoolTime = false;
@@ -272,12 +270,18 @@ public class PlayerAttack
 
         int count = 1;
 
+        if (_chargeCount == 1)
+        {
+            _playerControl.CameraSetting.ShakeCamera(CameraShakeType.AttackMin);
+        }
         if (_chargeCount == 2)
         {
+            _playerControl.CameraSetting.ShakeCamera(CameraShakeType.AttackMidium);
             count = 3;
         }
         else if (_chargeCount == 3)
         {
+            _playerControl.CameraSetting.ShakeCamera(CameraShakeType.AttackBig);
             count = 5;
         }
 
