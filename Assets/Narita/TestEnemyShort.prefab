@@ -125,3 +125,4 @@ MonoBehaviour:
   _stopDistance: 0.2
   _hitDamage: 1
   _life: 5
+  _deathEffect: {fileID: 6784212885407252446, guid: 61f35e0b885360d43bd064499d511ade, type: 3}
