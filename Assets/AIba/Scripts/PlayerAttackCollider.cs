@@ -10,8 +10,12 @@ public class PlayerAttackCollider : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            other?.GetComponent<IDamageble>()?.AddDamage(_attackPower);
-            _scoreManager.AddScore(0, other.gameObject.transform);
+            bool a = other.GetComponent<IDamageble>().AddDamage(_attackPower);
+
+            if (a)
+            {
+                _scoreManager.AddScore(0, other.gameObject.transform);
+            }
         }
     }
 }
