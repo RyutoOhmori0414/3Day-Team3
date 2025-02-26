@@ -74,6 +74,7 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
             var effect = Instantiate(_deathEffect, transform.position, Quaternion.identity);
             Destroy(effect, 1);
             Destroy(gameObject);
+            return true;
         }
         return false;
     }
