@@ -13,6 +13,7 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
     [SerializeField] int _life = 5;
     [SerializeField] GameObject _deathEffect;
     [SerializeField] Animator _anim;
+    [SerializeField] AudioSource _audio;
     private void Start()
     {
         FindAnyObjectByType<GameManager>().DefeatEnemy();
@@ -61,15 +62,19 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
 
     protected virtual void Start_S() { }
     protected virtual void Update_S() { }
-
-    public void AddDamage(int damagePoint)
+    bool IDamageble.AddDamage(int damagePoint)
     {
         _life -= damagePoint;
         if (_life <= 0)
         {
+            if (_audio != null)
+            {
+                _audio.PlayOneShot(_audio.clip);
+            }
             var effect = Instantiate(_deathEffect, transform.position, Quaternion.identity);
             Destroy(effect, 1);
             Destroy(gameObject);
         }
+        return false;
     }
 }
