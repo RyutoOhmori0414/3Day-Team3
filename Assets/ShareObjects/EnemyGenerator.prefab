@@ -51,8 +51,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   _spawnInterval: 1
-  _decreaseToInterval: 0.5
-  _minInterval: 1
+  _decreaseToInterval: 0.01
+  _minInterval: 0.2
   _enemiesList:
   - {fileID: 9206830189896485318, guid: cde7f10421cef224fa8fbb1dbb211626, type: 3}
   - {fileID: 1744842792597184321, guid: ad8b3d72a460ba248a47fef9ae087083, type: 3}

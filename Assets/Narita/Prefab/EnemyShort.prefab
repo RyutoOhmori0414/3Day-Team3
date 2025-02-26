@@ -47,13 +47,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1445665bd23ec184088f13199d85f5a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1
+  _moveSpeed: 1.5
   _stopDistance: 0.2
   _hitDamage: 1
   _life: 5
   _deathEffect: {fileID: 6784212885407252446, guid: 61f35e0b885360d43bd064499d511ade, type: 3}
   _anim: {fileID: 697089327642292583}
-  _audio: {fileID: 0}
 --- !u!136 &1276875372897886225
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -73,10 +72,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.55
   m_Height: 1.4397767
   m_Direction: 1
-  m_Center: {x: 0, y: -0.033127427, z: 0}
+  m_Center: {x: 0, y: -0.033127427, z: -0.1}
 --- !u!95 &697089327642292583
 Animator:
   serializedVersion: 7

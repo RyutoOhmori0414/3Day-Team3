@@ -166,13 +166,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4320f36c66b40bc43a66d80fd4010ccb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveSpeed: 1
+  _moveSpeed: 0.5
   _stopDistance: 5
   _hitDamage: 1
   _life: 5
   _deathEffect: {fileID: 6784212885407252446, guid: 61f35e0b885360d43bd064499d511ade, type: 3}
   _anim: {fileID: 1650269504190068022}
-  _audio: {fileID: 0}
   _bullet: {fileID: 8824376041768594347, guid: f161aa361ce86c24ca0ece2f9bdc640b, type: 3}
   _muzzle: {fileID: 9199890204394476349}
   _interval: 5
@@ -195,10 +194,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.55
   m_Height: 1.4397767
   m_Direction: 1
-  m_Center: {x: 0, y: -0.033127427, z: 0}
+  m_Center: {x: 0, y: -0.033127427, z: -0.1}
 --- !u!95 &1650269504190068022
 Animator:
   serializedVersion: 7
