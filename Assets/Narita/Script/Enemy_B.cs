@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TMPro.EditorUtilities;
+using UnityEngine;
 
 public abstract class Enemy_B : MonoBehaviour, IDamageble
 {
@@ -11,6 +12,7 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
     protected GameObject _player;
     [SerializeField] int _life = 5;
     [SerializeField] GameObject _deathEffect;
+    [SerializeField] Animator _anim;
     private void Start()
     {
         FindAnyObjectByType<GameManager>().DefeatEnemy();
@@ -33,20 +35,16 @@ public abstract class Enemy_B : MonoBehaviour, IDamageble
             transform.position += -dir.normalized * _moveSpeed * Time.deltaTime;
         }
 
-        dir.y = 0;
-        var cross = Vector3.Cross(transform.forward, dir);
-        if (cross.y < 0 && transform.localScale.x > 0)
+        if (dir.x > 0)
         {
-            transform.localScale = new Vector3(-1, 1, 1);
+            _anim.SetTrigger("TurnRight");
         }
-        if (cross.y > 0 && transform.localScale.x < 0)
+        if (dir.x < 0)
         {
-            transform.localScale = new Vector3(1, 1, 1);
+            _anim.SetTrigger("TurnLeft");
         }
-        else
-        {
-            return;
-        }
+
+        transform.forward = Camera.main.transform.forward;
     }
 
 
