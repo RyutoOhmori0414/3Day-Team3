@@ -776,33 +776,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 7306258428271846626, guid: f4672ba7c22d8344a82ecc226378b324, type: 3}
   m_PrefabInstance: {fileID: 1541283955}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &953808442 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1074318643825563764, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
-  m_PrefabInstance: {fileID: 1459551956}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &953808447
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 953808442}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 2f83bda6b2cb64b4e9c9dade692f88b7, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &987569618
 GameObject:
   m_ObjectHideFlags: 0
@@ -1266,29 +1239,10 @@ PrefabInstance:
       propertyPath: '_scoreUIWorld.Array.data[6]'
       value: 
       objectReference: {fileID: 86960910}
-    - target: {fileID: 8582479574787648198, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8582479574787648198, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.49043503
-      objectReference: {fileID: 0}
-    - target: {fileID: 8582479574787648198, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.8714778
-      objectReference: {fileID: 0}
-    - target: {fileID: 8582479574787648198, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 58.738
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1074318643825563764, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 953808447}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9955f685873f3a04bb986e7ee2de3bc1, type: 3}
 --- !u!1001 &1541283955
 PrefabInstance:
