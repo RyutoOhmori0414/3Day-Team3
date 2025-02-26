@@ -11,8 +11,11 @@ public class PlayerEffect
     [Header("移動の風のエフェクトがでるまでの時間")]
     [SerializeField] private float _waveTime = 2;
 
-    [Header("移動の風のエフェクト")]
-    [SerializeField] private GameObject _moveAttackEffect;
+    [Header("移動の火花のエフェクト")]
+    [SerializeField] private List<ParticleSystem> _moveAttackEffect = new List<ParticleSystem>();
+
+    [Header("チャージ完了のエフェクト")]
+    [SerializeField] private List<ParticleSystem> _chargeEffect = new List<ParticleSystem>();
 
     [Header("ダッシュ")]
     [SerializeField] private List<GameObject> _dash = new List<GameObject>();
@@ -31,7 +34,8 @@ public class PlayerEffect
     private PlayerControl _playerControl;
 
     public List<GameObject> Dash => _dash;
-    public GameObject MoveAttackEffect => _moveAttackEffect;
+    public List<ParticleSystem> MoveAttackEffect => _moveAttackEffect;
+    public List<ParticleSystem> ChargeEffect => _chargeEffect;
     public GameObject DashStop => _dashStop;
 
     public void Init(PlayerControl playerControl)
@@ -86,12 +90,12 @@ public class PlayerEffect
                 _waveEffect.SetActive(true);
             }
         }
-        else if(_isRight && h<0)
+        else if (_isRight && h < 0)
         {
             _waveEffect.SetActive(false);
             _countWaveTime = 0;
         }
-        else if(!_isRight && h>0)
+        else if (!_isRight && h > 0)
         {
             _waveEffect.SetActive(false);
             _countWaveTime = 0;
