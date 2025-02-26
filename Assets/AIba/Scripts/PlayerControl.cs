@@ -27,9 +27,11 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
     [Header("UI")]
     [SerializeField] private PlayerUI _ui;
 
+    [Header("音")]
+    [SerializeField] private PlayerSound _sound;
+
     [Header("PlayerのRigidbody")]
     [SerializeField] private Rigidbody _rb;
-
 
     [Header("プレイヤーのイメージ位置")]
     [SerializeField] private Transform _playerImage;
@@ -39,6 +41,7 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
 
     private bool _isCanMove = false;
 
+    public PlayerSound PlayerSound => _sound;
     public PlayerMove Move => _move;
     public PlayerCamera CameraSetting => _cameraSetting;
     public PlayerAttack Attack => _attack;
@@ -61,6 +64,7 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
         _effect.Init(this);
         _isCanMove = _isFastPlay;
         _ui.Init(this);
+        _sound.Init(this);
     }
 
 

@@ -83,6 +83,10 @@ public class PlayerMove
         {
             if (h == 0 && v == 0 || _saveH != h)
             {
+                //ダッシュ音
+                _playerControl.PlayerSound.Dash(false);
+                _playerControl.PlayerSound.DashStop(true);
+
                 _isCanDash = false;
                 _isDoDah = false;
                 _countDashTime = 0;
@@ -117,6 +121,9 @@ public class PlayerMove
             _isDoDah = true;
             _playerControl.Effect.Dash.ForEach(i => i.SetActive(true));
             _saveH = h;
+
+            //ダッシュ音
+            _playerControl.PlayerSound.Dash(true);
         }
 
     }

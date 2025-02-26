@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 [System.Serializable]
 public class PlayerAttack
 {
-    [Header("溜めの最大回数")] [SerializeField] private int _maxChargeCount = 3;
+    [Header("溜めの最大回数")][SerializeField] private int _maxChargeCount = 3;
 
     [Header("攻撃のため時間")]
     [SerializeField] private float _attackChageTime = 1;
@@ -188,7 +188,22 @@ public class PlayerAttack
                 _playerControl.PlayerUI.SetGage(f, _attackChageTime, _attackChageTime, true);
                 _chargeCount++;
                 _countChargeTime = 0;
-                Debug.Log("ちゃ");
+
+                //チャージ音_コンプリート
+                _playerControl.PlayerSound.ChargeComplete(_chargeCount);
+
+                if (_chargeCount == 3)
+                {
+                    //チャージ音_最大ため
+                    _playerControl.PlayerSound.ChargeKeepSound(true);
+                }
+                else
+                {
+                    //チャージ音
+                    _playerControl.PlayerSound.ChargeSound(true);
+                }
+
+
                 return;
             }
             int g = _chargeCount + 1;
@@ -200,6 +215,9 @@ public class PlayerAttack
 
         if (_playerControl.InputM.IsLeftMouseClickDown)
         {
+            //チャージ音
+            _playerControl.PlayerSound.ChargeSound(true);
+
             _isReleaseAttackButtun = false;
             _isCharge = true;
             _isChangeCamera = true;
@@ -257,6 +275,11 @@ public class PlayerAttack
 
     public void Attack()
     {
+        //チャージ音_最大ため
+        _playerControl.PlayerSound.ChargeKeepSound(false);
+        //チャージ音
+        _playerControl.PlayerSound.ChargeSound(false);
+
         _isCharge = false;
         _isChangeCamera = false;
         _isCoolTime = false;
@@ -295,12 +318,17 @@ public class PlayerAttack
         {
             c = 3;
         }
+
         if (_bulletType == BulletType.Reflection)
         {
+            //発射音
+            _playerControl.PlayerSound.Fire(_chargeCount, false);
             ReflectionbulletSpown(count, c);
         }
         else
         {
+            //発射音
+            _playerControl.PlayerSound.Fire(_chargeCount, true);
             Penetrati0nBulletSpown(count, c);
         }
         _chargeCount = 0;
