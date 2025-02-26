@@ -11,6 +11,19 @@ public class PlayerMove
     [Header("移動速度の軽減速度")]
     private float _ressRbSpeed = 0.05f;
 
+    [Header("ダッシュ")]
+    [SerializeField] private float _dashPower = 6f;
+    [Header("ダッシュの実行時間")]
+    [SerializeField] private float _dashTime = 0.5f;
+    [Header("ダッシュのクールタイム")]
+    [SerializeField] private float _dashCoolTime = 4f;
+
+    private bool _isDoDah = false;
+    private bool _isCanDash = true;
+    private float _countDashCoolTime = 0;
+    private float _countDashTime = 0;
+
+
     private PlayerControl _playerControl;
 
     public void Init(PlayerControl playerControl)
@@ -49,6 +62,52 @@ public class PlayerMove
         _playerControl.Rb.AddForce(moveDir.normalized * _moveSpeed);
     }
 
+    public void Dash()
+    {
+        if (!_isCanDash)
+        {
+            _countDashCoolTime += Time.deltaTime;
+
+            if (_countDashCoolTime > _dashCoolTime)
+            {
+                _isCanDash = true;
+                _countDashCoolTime = 0;
+            }
+            return;
+        }   //クールタイム
+        else if (_isDoDah)
+        {
+            _countDashTime += Time.deltaTime;
+
+            if(_countDashTime>_dashTime)
+            {
+                _isCanDash = false;
+                _isDoDah = false;
+                _countDashTime = 0;
+            }
+
+            var h = _playerControl.InputM.HorizontalInput;
+            var v = _playerControl.InputM.VerticalInput;
+
+            if (_playerControl.Attack.IsDoMoveAttack)
+            {
+                _playerControl.Rb.linearVelocity = Vector3.zero;
+            }
+
+            Vector3 moveDir = new Vector3(h, 0, v);
+            _playerControl.Rb.linearVelocity = moveDir.normalized * _dashPower;
+        }
+
+
+        //方向転換中は不可
+
+
+        if (_playerControl.InputM.IsLeftShiftDown)
+        {
+            _isDoDah = true;
+        }
+
+    }
 
     /// <summary>
     /// 速度の調整
@@ -66,7 +125,7 @@ public class PlayerMove
         {
             float setX = _playerControl.Rb.linearVelocity.x + _ressRbSpeed;
 
-            _playerControl.Rb.linearVelocity = new Vector3(-_speedLimit.x, _playerControl.Rb.linearVelocity.y, _playerControl.Rb.linearVelocity.z);
+            _playerControl.Rb.linearVelocity = new Vector3(setX, _playerControl.Rb.linearVelocity.y, _playerControl.Rb.linearVelocity.z);
         }
 
         //Y
