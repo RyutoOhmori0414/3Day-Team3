@@ -7,5 +7,5 @@ public interface IDamageble
     /// ダメージを与える
     /// </summary>
     /// <param name="damagePoint">与えるダメージの量</param>
-    public void AddDamage(int damagePoint);
+    public bool AddDamage(int damagePoint);
 }

@@ -77,6 +77,19 @@ public class PlayerMove
         }   //クールタイム
         else if (_isDoDah)
         {
+            var h = _playerControl.InputM.HorizontalInput;
+            var v = _playerControl.InputM.VerticalInput;
+
+            if(h==0 && v==0)
+            {
+                _isCanDash = false;
+                _isDoDah = false;
+                _countDashTime = 0;
+                _playerControl.Effect.Dash.ForEach(i => i.SetActive(false));
+                _playerControl.Effect.DashStop.SetActive(true);
+            }
+
+
             _countDashTime += Time.deltaTime;
 
             if(_countDashTime>_dashTime)
@@ -85,10 +98,6 @@ public class PlayerMove
                 _isDoDah = false;
                 _countDashTime = 0;
             }
-
-            var h = _playerControl.InputM.HorizontalInput;
-            var v = _playerControl.InputM.VerticalInput;
-
             if (_playerControl.Attack.IsDoMoveAttack)
             {
                 _playerControl.Rb.linearVelocity = Vector3.zero;
