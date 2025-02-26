@@ -17,6 +17,9 @@ public class PlayerEffect
     [Header("ダッシュ")]
     [SerializeField] private List<GameObject> _dash = new List<GameObject>();
 
+    [Header("ダッシュ_途中やめ")]
+    [SerializeField] private GameObject _dashStop;
+
     private float _countWaveTime = 0;
 
     private float _saveInput = 0;
@@ -29,6 +32,7 @@ public class PlayerEffect
 
     public List<GameObject> Dash => _dash;
     public GameObject MoveAttackEffect => _moveAttackEffect;
+    public GameObject DashStop => _dashStop;
 
     public void Init(PlayerControl playerControl)
     {
