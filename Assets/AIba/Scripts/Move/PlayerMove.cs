@@ -22,7 +22,7 @@ public class PlayerMove
     private bool _isCanDash = true;
     private float _countDashCoolTime = 0;
     private float _countDashTime = 0;
-
+    private float _saveH;
 
     private PlayerControl _playerControl;
 
@@ -64,6 +64,10 @@ public class PlayerMove
 
     public void Dash()
     {
+
+        var h = _playerControl.InputM.HorizontalInput;
+        var v = _playerControl.InputM.VerticalInput;
+
         if (!_isCanDash)
         {
             _countDashCoolTime += Time.deltaTime;
@@ -77,10 +81,7 @@ public class PlayerMove
         }   //クールタイム
         else if (_isDoDah)
         {
-            var h = _playerControl.InputM.HorizontalInput;
-            var v = _playerControl.InputM.VerticalInput;
-
-            if(h==0 && v==0)
+            if (h == 0 && v == 0 || _saveH != h)
             {
                 _isCanDash = false;
                 _isDoDah = false;
@@ -92,7 +93,7 @@ public class PlayerMove
 
             _countDashTime += Time.deltaTime;
 
-            if(_countDashTime>_dashTime)
+            if (_countDashTime > _dashTime)
             {
                 _isCanDash = false;
                 _isDoDah = false;
@@ -115,6 +116,7 @@ public class PlayerMove
         {
             _isDoDah = true;
             _playerControl.Effect.Dash.ForEach(i => i.SetActive(true));
+            _saveH = h;
         }
 
     }
