@@ -6,10 +6,11 @@ public class LongEnemy : Enemy_B
     [SerializeField, Header("弾の発射位置")] Transform _muzzle;
     [SerializeField, Header("弾の発射間隔")] float _interval = 5;
     float _timer = 0;
-    bool _isVisible;
+    Camera _mainCamera;
     protected override void Start_S()
     {
         _timer = Time.time;
+        _mainCamera = Camera.main;
     }
     protected override void Update_S()
     {
@@ -17,17 +18,18 @@ public class LongEnemy : Enemy_B
         if (Time.time >= _timer + _interval)
         {
             _timer = Time.time;
-            if (_isVisible == false) return;
-            var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
-            bullet.GetComponent<EnemyBullet>().AddTarget(_player);
+            if (IsVisible(_mainCamera))
+            {
+                var bullet = Instantiate(_bullet, _muzzle.position, Quaternion.identity);
+                bullet.GetComponent<EnemyBullet>().AddTarget(_player);
+            }
         }
     }
-    private void OnBecameVisible()
+    bool IsVisible(Camera camera)
     {
-        _isVisible = true;
-    }
-    private void OnBecameInvisible()
-    {
-        _isVisible = false;
+        Vector3 viewportPos = camera.WorldToViewportPoint(transform.position);
+        return viewportPos.x >= 0 && viewportPos.x <= 1 &&
+               viewportPos.y >= 0 && viewportPos.y <= 1 &&
+               viewportPos.z > 0;
     }
 }
