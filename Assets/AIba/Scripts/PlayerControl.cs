@@ -82,6 +82,7 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
         _anim.AnimUpdata();
         _effect.EffectUpdata();
         _ui.ChargeUIPosition();
+        _hp.CountGodTime();
     }
 
     private void FixedUpdate()
