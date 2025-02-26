@@ -26,6 +26,14 @@ public class PlayerUI
     [Header("FillAmount_ゲージ3")]
     [SerializeField] private Image _fillAmountImage3;
 
+    [Header("ゲージ完了_1")]
+    [SerializeField] private GameObject _gageChargedImage1;
+    [Header("ゲージ完了_2")]
+    [SerializeField] private GameObject _gageChargedImage2;
+    [Header("ゲージ完了_3")]
+    [SerializeField] private GameObject _gageChargedImage3;
+
+
     private PlayerControl _playerControl;
 
     private float _countTime = 0;
@@ -50,6 +58,10 @@ public class PlayerUI
         _fillAmountImage1.fillAmount = 0;
         _fillAmountImage2.fillAmount = 0;
         _fillAmountImage3.fillAmount = 0;
+
+        _gageChargedImage1.SetActive(false);
+        _gageChargedImage2.SetActive(false);
+        _gageChargedImage3.SetActive(false);
         _gageImage2.gameObject.SetActive(false);
         _gageImage3.gameObject.SetActive(false);
     }
@@ -61,16 +73,19 @@ public class PlayerUI
             if (gageNum == 1)
             {
                 _fillAmountImage1.fillAmount = 1;
+                _gageChargedImage1.SetActive(true);
                 _gageImage2.gameObject.SetActive(true);
 
             }
             else if (gageNum == 2)
             {
                 _fillAmountImage2.fillAmount = 1;
+                _gageChargedImage2.SetActive(true);
                 _gageImage3.gameObject.SetActive(true);
             }
             else if (gageNum == 3)
             {
+                _gageChargedImage3.SetActive(true);
                 _fillAmountImage3.fillAmount = 1;
             }
         }

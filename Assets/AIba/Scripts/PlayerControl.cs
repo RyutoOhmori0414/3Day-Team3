@@ -67,6 +67,8 @@ public class PlayerControl : MonoBehaviour, IGameStartReciever
     void Update()
     {
         if (!_isCanMove) return;
+
+        _input.HandleInput();
         _stateMachine.Update();
         _attack.Charge();
         _attack.ChangeBulletType();

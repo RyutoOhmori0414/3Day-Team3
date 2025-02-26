@@ -130,9 +130,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _bulletType: 1
-  _speed: 12
+  _speed: 17
   _attackPower: 7
-  _lifeTime: 10
+  _lifeTime: 20
   _hitNum: 10
 --- !u!136 &4665840073355467200
 CapsuleCollider:

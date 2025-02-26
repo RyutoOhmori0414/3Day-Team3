@@ -120,11 +120,8 @@ public class InputManager : MonoBehaviour
 
 
 
-    private void Update()
-    {
-        if (!_isCanInput) return;
-
-        HandleInput();
-
-    }
+    //private void Update()
+    //{
+    //    HandleInput();
+    //}
 }

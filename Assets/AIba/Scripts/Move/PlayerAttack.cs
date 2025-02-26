@@ -1,7 +1,6 @@
-﻿using NUnit.Framework;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEngine.UIElements;
 
 [System.Serializable]
 public class PlayerAttack
@@ -163,8 +162,8 @@ public class PlayerAttack
             Attack();
             //UI_チャージ初期設定
             _playerControl.PlayerUI.ResetChargeUI();
-            _chargeCount = 0;
             _isOneCharge = false;
+            Debug.Log("ボタンを離した");
             return;
         }
 
@@ -182,14 +181,19 @@ public class PlayerAttack
                 _playerControl.PlayerUI.SetGage(f, _attackChageTime, _attackChageTime, true);
                 _chargeCount++;
                 _countChargeTime = 0;
+                Debug.Log("ちゃ");
                 return;
             }
             int g = _chargeCount + 1;
             _playerControl.PlayerUI.SetGage(g, _attackChageTime, _countChargeTime, false);
         }
 
+
+
+
         if (_playerControl.InputM.IsLeftMouseClickDown)
         {
+            _isReleaseAttackButtun = false;
             _isCharge = true;
             _isChangeCamera = true;
 
@@ -200,6 +204,7 @@ public class PlayerAttack
                 _chargeEffect.ForEach(i => i.Play());
             }
         }   //攻撃ボタンを押したかどうか
+
 
     }
 
@@ -232,30 +237,106 @@ public class PlayerAttack
 
         _playerControl.CameraSetting.ResetChangeCameraCount();
 
-        GameObject go;
+        int count = 1;
+
+        if (_chargeCount == 2)
+        {
+            count = 3;
+        }
+        else if (_chargeCount == 3)
+        {
+            count = 5;
+        }
+
+
         if (_bulletType == BulletType.Reflection)
         {
-            go = GameObject.Instantiate(_reflectionbullet);
+            ReflectionbulletSpown(count);
         }
         else
         {
-            go = GameObject.Instantiate(_penetrationBullet);
+            Penetrati0nBulletSpown(count);
         }
+        _chargeCount = 0;
+    }
 
-        go.transform.position = _muzzlePos.position;
-
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        Vector3 worldPos = default;
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layer))
+    public void Penetrati0nBulletSpown(int i)
+    {
+        for (int j = 0; j < i; j++)
         {
-            worldPos = hit.point;
-            worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
-        }
+            GameObject go;
+            go = GameObject.Instantiate(_penetrationBullet);
+            go.transform.position = _muzzlePos.position;
 
-        Vector3 dir = worldPos - _muzzlePos.position;
-        dir.y = 0;
-        go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Vector3 worldPos = default;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layer))
+            {
+                worldPos = hit.point;
+                worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
+            }
+            Vector3 dir = worldPos - _muzzlePos.position;
+            if (j == 1)
+            {
+                dir = Quaternion.Euler(0, 10, 0) * dir;
+            }
+            else if (j == 2)
+            {
+                dir = Quaternion.Euler(0, -10, 0) * dir;
+            }
+            else if (j == 3)
+            {
+                dir = Quaternion.Euler(0, 15, 0) * dir;
+            }
+            else if (j == 4)
+            {
+                dir = Quaternion.Euler(0, -15, 0) * dir;
+            }
+            dir.y = 0;
+
+            go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager);
+        }
+    }
+
+    public void ReflectionbulletSpown(int i)
+    {
+        for (int j = 0; j < i; j++)
+        {
+            GameObject go;
+            go = GameObject.Instantiate(_reflectionbullet);
+            go.transform.position = _muzzlePos.position;
+
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Vector3 worldPos = default;
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, _layer))
+            {
+                worldPos = hit.point;
+                worldPos = new Vector3(worldPos.x, _setYPos, worldPos.z);
+            }
+            Vector3 dir = worldPos - _muzzlePos.position;
+            if (j == 1)
+            {
+                dir = Quaternion.Euler(0, 30, 0) * dir;
+            }
+            else if (j == 2)
+            {
+                dir = Quaternion.Euler(0, -30, 0) * dir;
+            }
+            else if(j == 3)
+            {
+                dir = Quaternion.Euler(0, 40, 0) * dir;
+            }
+            else if(j==4)
+            {
+                dir = Quaternion.Euler(0, -40, 0) * dir;
+            }
+
+            dir.y = 0;
+
+            go?.GetComponent<PlayerBullet>()?.Init(dir, _scoreManager);
+        }
     }
 
 }
